@@ -1,21 +1,11 @@
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
-import React, { useState } from "react";
-//bootstrap
-import Modal from "react-bootstrap/Modal";
-import ModalHeader from "react-bootstrap/ModalHeader";
-import ModalFooter from "react-bootstrap/ModalFooter";
-import Button from "react-bootstrap/Button";
+
 //components
 import Navbar from "../components/Navbar";
 
-export default function Home() {
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
+export default function Profil() {
   return (
     <div className={styles.container}>
       <Head>
@@ -27,32 +17,7 @@ export default function Home() {
       <Navbar />
 
       <main className={styles.main}>
-        <Button variant="primary" onClick={handleShow}>
-          Launch demo modal
-        </Button>
-        <Modal show={show} onHide={handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>Modal heading</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
-              Close
-            </Button>
-            <Button variant="primary" onClick={handleClose}>
-              Save Changes
-            </Button>
-          </Modal.Footer>
-        </Modal>
-
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{" "}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
+        <h1 className={styles.title}>Mein Profil</h1>
 
         <div className={styles.grid}>
           <a href="https://nextjs.org/docs" className={styles.card}>
