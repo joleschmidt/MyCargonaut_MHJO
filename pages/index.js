@@ -10,12 +10,15 @@ import Button from "react-bootstrap/Button";
 //components
 import Navbar from "../components/Navbar";
 
-export default function Home() {
+const Home = () => {
 	const [show, setShow] = useState(false);
 
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
 
+	//Funktionen
+
+	//HTML
 	return (
 		<div className={styles.container}>
 			<Head>
@@ -95,4 +98,6 @@ export default function Home() {
 			</footer>
 		</div>
 	);
-}
+};
+
+export default Home;

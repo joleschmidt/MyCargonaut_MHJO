@@ -1,6 +1,9 @@
 import React from "react";
 
 const Navbar = () => {
+	//Funktionen
+
+	//HTML
 	return (
 		<nav className="navbar navbar-expand-lg bg-light">
 			<div className="container">
