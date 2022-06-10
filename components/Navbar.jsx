@@ -37,8 +37,8 @@ const Navbar = () => {
 							</form>
 						</li>
 						<li>
-							<a className="nav-link" href="/kaufen">
-								Home
+							<a className="nav-link" href="/fctemplate">
+								FC Template
 							</a>
 						</li>
 					</ul>

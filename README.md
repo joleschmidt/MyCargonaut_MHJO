@@ -1,7 +1,6 @@
 # MyCargonaut_MHJO
 
 =======
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
 
@@ -15,28 +14,45 @@ yarn dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## Build / Update Project for Firebase
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+`npm run build`
 
 ## Firebase Hosting
 
 update project ---> `firebase deploy --only hosting`
 (delete .firebase folder if project is not updated correctly)
+
+## Firebase testing / debugging
+
+`firebase serve --only hosting`
+(port issues on mac with `firebase emulators:start` because of airplay & java)
+
+## Docs
+
+`React`
+
+- [React.js Hooks Documentation](https://reactjs.org/docs/hooks-intro.html) - handle useState, useEffect & functional Components.
+
+`Next.js` -
+
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+`Bootstrap`
+
+- [Bootstrap Documentation](https://getbootstrap.com/docs/4.1/layout/overview/) - Layout, Content, Components etc.
+
+`FontAwesome Icons`
+
+- [FontAwesome Icons](https://fontawesome.com/search?s=solid%2Cbrands)
+
+`Firebase`
+
+- [Firebase Documentation](https://firebase.google.com/docs/firestore/manage-data/add-data#web-version-8_5) - use Web version 8 for better understanding.
+- [Firebase / React Hooks](https://cloudnweb.dev/2020/02/building-an-app-with-firebase-and-react-hooks-in-simple-way/) - Add-, Get-, Delete Functions.
+
+## Misc
+
+use <div> instead of <p>
+`<p> is not supported in Next.js`
