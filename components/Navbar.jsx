@@ -36,6 +36,11 @@ const Navbar = () => {
 								</button>
 							</form>
 						</li>
+						<li>
+							<a className="nav-link" href="/kaufen">
+								Home
+							</a>
+						</li>
 					</ul>
 					<div className="nav-item">
 						<a className="navbar-brand" aria-current="page" href="/profile">
