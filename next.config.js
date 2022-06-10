@@ -4,7 +4,12 @@ const nextConfig = {
 };
 
 module.exports = {
+	trailingSlash: true,
 	eslint: {
 		dirs: ["pages", "utils", "images"], // Only run ESLint on the 'pages' and 'utils' directories during production builds (next build)
+	},
+	images: {
+		loader: "akamai",
+		path: "",
 	},
 };

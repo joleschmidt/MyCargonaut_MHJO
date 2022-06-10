@@ -1,24 +1,24 @@
 {
-  "name": "my-cargonaut",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "@next/eslint-plugin-next": "^12.1.6",
-    "bootstrap": "^5.1.3",
-    "firebase": "^9.8.3",
-    "next": "12.1.6",
-    "react": "18.1.0",
-    "react-bootstrap": "^2.4.0",
-    "react-dom": "18.1.0"
-  },
-  "devDependencies": {
-    "eslint": "8.17.0",
-    "eslint-config-next": "12.1.6"
-  }
+	"name": "my-cargonaut",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"dev": "next dev",
+		"start": "next start",
+		"lint": "next lint",
+		"build": "next build && next export"
+	},
+	"dependencies": {
+		"@next/eslint-plugin-next": "^12.1.6",
+		"bootstrap": "^5.1.3",
+		"firebase": "^9.8.3",
+		"next": "12.1.6",
+		"react": "18.1.0",
+		"react-bootstrap": "^2.4.0",
+		"react-dom": "18.1.0"
+	},
+	"devDependencies": {
+		"eslint": "8.17.0",
+		"eslint-config-next": "12.1.6"
+	}
 }
