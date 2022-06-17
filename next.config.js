@@ -12,4 +12,5 @@ module.exports = {
 		loader: "akamai",
 		path: "",
 	},
+	start: "env-cmd -f .env.development react-scripts start",
 };

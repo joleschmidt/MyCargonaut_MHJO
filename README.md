@@ -56,4 +56,4 @@ update project ---> `firebase deploy --only hosting`
 
 `use <div> instead of <p>`
 
-- `<p>`is not supported in Next.js
+- `<p>` is not supported in Next.js
