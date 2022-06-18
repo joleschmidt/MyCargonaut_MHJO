@@ -14,3 +14,52 @@ a {
 * {
   box-sizing: border-box;
 }
+.input-styles{
+  background-color: #A3C4C1!important;
+  color: #fafafa!important;
+}
+.input-styles::placeholder{
+  color: #fafafa!important;
+}
+.input-position{
+  display: flex;
+  justify-content: space-between;
+}
+.space-right{
+  margin-right: .5rem;
+}
+.space-left{
+  margin-left: .5rem;
+}
+.dropdown-style{
+  background-color: #A3C4C1!important;
+  border-color: #A3C4C1!important;
+  color: #fafafa!important;
+  width: 100%!important;
+  text-align: start!important;
+}
+.dropdown-style:hover{
+  background-color: #A3C4C1!important;
+  border-color: #A3C4C1!important;
+  color: #fafafa!important;
+  box-shadow: none!important;
+}
+.dropdown-style::after{
+  content: none!important;
+}
+.btn-style{
+  background-color: #669D97!important;
+  border-color: #669D97!important;
+}
+.btn-style:hover{
+  background-color: #669D97!important;
+  border-color: #669D97!important;
+  box-shadow: none!important;
+}
+.btn-position{
+  display: flex;
+  justify-content: center;
+}
+.link-style{
+  color: #4f4f4f!important;
+}

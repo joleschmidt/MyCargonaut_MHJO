@@ -41,6 +41,11 @@ const Navbar = () => {
 								FC Template
 							</a>
 						</li>
+						<li>
+							<a className="nav-link" href="/add-ride">
+								Angebot veröffentlichen
+							</a>
+						</li>
 					</ul>
 					<div className="nav-item">
 						<a className="navbar-brand" aria-current="page" href="/profile">
