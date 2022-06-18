@@ -32,8 +32,9 @@ const FcTemplate = () => {
 		firebase.firestore().collection("notes").add({
 			title: "Working",
 			body: "This is to check the Integration is working",
-			nr: Math.random(),
+			nr: count,
 		});
+		setCount(count + 1);
 	};
 
 	const addUserToFirestore = () => {
@@ -41,12 +42,15 @@ const FcTemplate = () => {
 			first: firstName,
 			last: lastName,
 		});
+		setFirstName("");
+		setLastName("");
 	};
 
 	const getFromFirestore = () => {
 		firebase
 			.firestore()
 			.collection("notes")
+			.orderBy("nr", "desc")
 			.onSnapshot((snapshot) => {
 				const lists = snapshot.docs.map((doc) => ({
 					id: doc.id,
@@ -107,12 +111,12 @@ const FcTemplate = () => {
 							<h5>{list.title}</h5>
 							<p>{list.body}</p>
 							<p>{list.nr}</p>
-							<button
+							<Button
 								className="btn-danger"
 								onClick={() => deleteFromFirestore(list.id)}
 							>
 								Delete from Firestore
-							</button>
+							</Button>
 						</div>
 					))}
 				</div>
@@ -123,12 +127,12 @@ const FcTemplate = () => {
 						<div className="my-3" key={user.id}>
 							<h5>{user.first}</h5>
 							<p>{user.last}</p>
-							<button
+							<Button
 								className="btn-danger"
 								onClick={() => deleteUserFromFirestore(user.id)}
 							>
 								Delete from Firestore
-							</button>
+							</Button>
 						</div>
 					))}
 					<label htmlFor="firstName">First Name</label>
@@ -147,12 +151,12 @@ const FcTemplate = () => {
 						value={lastName}
 						onChange={(e) => setLastName(e.target.value)}
 					/>
-					<button
+					<Button
 						className="btn-primary mt-2"
 						onClick={() => addUserToFirestore()}
 					>
 						Add to Firestore
-					</button>
+					</Button>
 				</div>
 			</div>
 		</div>
