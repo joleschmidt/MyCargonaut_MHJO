@@ -10,12 +10,14 @@ import Button from "react-bootstrap/Button";
 //components
 import Navbar from "../components/Navbar";
 import SignInModal from "../components/SignInModal";
+import ReviewModal from "../components/ReviewModal";
 
 const Home = () => {
 	const [show, setShow] = useState(false);
+	const [showReview, setShowReview] = useState(false);
 
-	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
+	const handleShowReview = () => setShowReview(true);
 
 	//Funktionen
 
@@ -32,15 +34,22 @@ const Home = () => {
 
 			<main className={styles.main}>
 				<SignInModal showModal={show} setShowModal={setShow} />
+				<ReviewModal
+					showReviewModal={showReview}
+					setReviewModal={setShowReview}
+				/>
 
 				<h1 className={styles.title}>
 					Welcome to <a href="https://nextjs.org">Next.js!</a>
 				</h1>
 
 				<Button variant="primary" onClick={handleShow}>
-					open modal
+					anmelden
 				</Button>
 
+				<Button className="mt-2" variant="primary" onClick={handleShowReview}>
+					bewerten
+				</Button>
 				<div className={styles.grid}>
 					<a href="https://nextjs.org/docs" className={styles.card}>
 						<h2>Documentation &rarr;</h2>

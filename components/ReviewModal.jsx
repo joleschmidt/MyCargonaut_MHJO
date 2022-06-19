@@ -1,61 +1,64 @@
 import React, { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
+import { Rating } from "react-simple-star-rating";
 
-const SignInModal = (props) => {
-	const { showModal, setShowModal } = props;
+const ReviewModal = (props) => {
+	const { showReviewModal, setReviewModal } = props;
+	const handleCloseReview = () => setReviewModal(false);
+	const [rating, setRating] = useState(0); // initial rating value
 
-	const handleClose = () => setShowModal(false);
+	// Catch Rating value
+	const handleRating = (rate) => {
+		setRating(rate);
+	};
 
 	return (
 		<div>
 			<Modal
 				style={styles.container}
-				show={showModal}
-				onHide={handleClose}
+				show={showReviewModal}
+				onHide={handleCloseReview}
 				centered
 			>
 				<Modal.Header closeButton style={styles.modalCenter}>
 					<Modal.Title style={styles.loginTitle} className="ms-auto">
-						Login
+						Bewertung
 					</Modal.Title>
 				</Modal.Header>
 				<Modal.Body style={styles.modalCenter}>
 					<form>
+						<Rating
+							showTooltip
+							tooltipArray={["Terrible", "Bad", "Average", "Great", "Prefect"]}
+							onClick={handleRating}
+							ratingValue={rating}
+							allowHover={false}
+							fillColor="#659e98"
+						/>
+
 						<input
-							type="email"
-							placeholder="E-Mail-Adresse"
+							type="text"
+							placeholder="Titel"
 							style={styles.textInput}
 							className="form-control"
 							autoFocus
+							required
 						/>
-						<input
-							type="password"
-							placeholder="Passwort"
-							style={styles.textInput}
+						<textarea
+							placeholder="Bewertung"
+							style={styles.textAreaInput}
 							className="form-control"
 							autoFocus
+							required
 						/>
-						<Button
-							variant="primary"
-							style={styles.signInBtn}
-							onClick={handleClose}
-						>
-							anmelden
-						</Button>
-						<div style={styles.aReg}>
-							noch kein Konto?{" "}
-							<a href="#" style={styles.link}>
-								{" "}
-								hier registrieren
-							</a>
-						</div>
+
 						<hr style={styles.border} />
 						<Button
 							variant="primary"
-							style={styles.signWGBtn}
-							onClick={handleClose}
+							style={styles.sendBtn}
+							onClick={handleCloseReview}
 						>
-							weiter mit Google
+							absenden
 						</Button>
 					</form>
 				</Modal.Body>
@@ -64,8 +67,7 @@ const SignInModal = (props) => {
 	);
 };
 
-export default SignInModal;
-
+export default ReviewModal;
 let styles = {
 	aReg: {
 		display: "flex",
@@ -75,6 +77,7 @@ let styles = {
 	},
 	border: {
 		border: "1px solid #659e98",
+		marginTop: "30px",
 	},
 	container: {
 		borderRadius: "15px !important",
@@ -82,6 +85,13 @@ let styles = {
 		justifyContent: "center",
 		alignItems: "center",
 		overflow: "hidden",
+	},
+	textAreaInput: {
+		height: "150px",
+		width: "456px",
+		borderRadius: "15px",
+		marginTop: "30px",
+		borderColor: "#8cb6b2",
 	},
 	textInput: {
 		height: "50px",
@@ -108,13 +118,14 @@ let styles = {
 		justifyContent: "center",
 		alignItems: "center",
 	},
-	signInBtn: {
+	sendBtn: {
 		height: "55px",
 		width: "456px",
 		borderRadius: "15px",
 		borderWidth: "0px",
 		backgroundColor: "#659e98",
-		marginTop: "30px",
+		marginTop: "20px",
+		marginBottom: "30px",
 	},
 	signWGBtn: {
 		height: "50px",
