@@ -20,7 +20,7 @@ const SignInModal = (props) => {
 	const [success, setSuccess] = useState(false);
 
 	const handleSignIn = () => {
-		if (password === "") {
+		if (password === "" || email === "") {
 			setError(true);
 			setSuccess(false);
 		} else {
@@ -33,7 +33,7 @@ const SignInModal = (props) => {
 	};
 
 	const handleSignUp = () => {
-		if (password !== checkPassword) {
+		if (password !== checkPassword || password === "" || email === "") {
 			setError(true);
 			setSuccess(false);
 		} else {
@@ -91,7 +91,9 @@ const SignInModal = (props) => {
 							/>
 						) : null}
 						{error == true ? (
-							<p className="text-danger mt-2">Falsches Passwort!</p>
+							<p className="text-danger mt-2">
+								Bitte überprüfe deine Eingaben!
+							</p>
 						) : null}
 						{success == true ? (
 							<p className=" text-info mt-2">Anmeldung war erfolgreich!</p>
