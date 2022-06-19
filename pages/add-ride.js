@@ -3,14 +3,13 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import {Dropdown, Form} from "react-bootstrap";
-import delivery from "../img/delivery.svg";
 
 
 //components
 import Navbar from "../components/Navbar";
 import Button from "react-bootstrap/Button";
 
-const Test = () => {
+const Ride = () => {
     //Funktionen
 
     //HTML
@@ -26,11 +25,20 @@ const Test = () => {
 
             <main className="container">
                 <div className="input-position mt-5">
-                    <div>
+                    <div className="d-flex flex-column justify-content-center">
+                            <div className="flex-row">
+                                <a className="nav-link d-flex justify-content-end link-style mb-2" href="/add-shipping">
+                                <img
+                                    src='/Vector.svg'
+                                    alt="SVG send"
+                                    width="3%"
+                                    height="3%"
+                                    className="send-icon-style"
+                                />Fahrten veröffentlichen
+                                </a>
+                            </div>
 
-                        <a className="nav-link d-flex justify-content-end link-style mb-2" href="/add-shipping">
-                            Fahrten veröffentlichen
-                        </a>
+
                         <Form>
                             <input
                                 type="text"
@@ -108,15 +116,20 @@ const Test = () => {
                                 </Dropdown.Menu>
                             </Dropdown>
                         </Form>
-                        <Button className="btn-style">
-                            veröffentlichen
-                        </Button>
+                        <div className="d-flex justify-content-center">
+                            <Button className="btn-style mt-4 mb-4">
+                                veröffentlichen
+                            </Button>
+                        </div>
                     </div>
-
-                <img
-                    src={delivery}
-                    alt="Ware versenden"
-                />
+                    <div>
+                        <img
+                            src='/delivery.svg'
+                            alt="SVG von Ware versenden"
+                            width="90%"
+                            height="90%"
+                        />
+                    </div>
                 </div>
             </main>
 
@@ -136,4 +149,4 @@ const Test = () => {
     );
 };
 
-export default Test;
+export default Ride;

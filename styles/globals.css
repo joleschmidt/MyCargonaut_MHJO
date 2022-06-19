@@ -56,10 +56,16 @@ a {
   border-color: #669D97!important;
   box-shadow: none!important;
 }
-.btn-position{
-  display: flex;
-  justify-content: center;
-}
+
 .link-style{
   color: #4f4f4f!important;
 }
+
+.send-icon-style{
+  color: #005B52!important;
+  margin-right: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
