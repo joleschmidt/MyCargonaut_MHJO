@@ -1,10 +1,49 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import React, { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 
 const SignInModal = (props) => {
 	const { showModal, setShowModal } = props;
+	const handleClose = () => {
+		setShowModal(false);
+		setError(false);
+		setSuccess(false);
+	};
+	const [showSignUp, setShowSignUp] = useState(false);
 
-	const handleClose = () => setShowModal(false);
+	//auth
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+	const [checkPassword, setCheckPassword] = useState("");
+	const [error, setError] = useState(false);
+	const [success, setSuccess] = useState(false);
+
+	const handleSignIn = () => {
+		if (password === "") {
+			setError(true);
+			setSuccess(false);
+		} else {
+			setEmail("");
+			setPassword("");
+			setCheckPassword("");
+			setError(false);
+			setSuccess(true);
+		}
+	};
+
+	const handleSignUp = () => {
+		if (password !== checkPassword) {
+			setError(true);
+			setSuccess(false);
+		} else {
+			setEmail("");
+			setPassword("");
+			setCheckPassword("");
+			setError(false);
+			setSuccess(true);
+		}
+	};
 
 	return (
 		<div>
@@ -14,9 +53,10 @@ const SignInModal = (props) => {
 				onHide={handleClose}
 				centered
 			>
+				{/* signIn */}
 				<Modal.Header closeButton style={styles.modalCenter}>
 					<Modal.Title style={styles.loginTitle} className="ms-auto">
-						Login
+						{showSignUp == true ? "Registrierung" : "Login"}
 					</Modal.Title>
 				</Modal.Header>
 				<Modal.Body style={styles.modalCenter}>
@@ -27,6 +67,8 @@ const SignInModal = (props) => {
 							style={styles.textInput}
 							className="form-control"
 							autoFocus
+							value={email}
+							onChange={(e) => setEmail(e.target.value)}
 						/>
 						<input
 							type="password"
@@ -34,28 +76,78 @@ const SignInModal = (props) => {
 							style={styles.textInput}
 							className="form-control"
 							autoFocus
+							value={password}
+							onChange={(e) => setPassword(e.target.value)}
 						/>
-						<Button
-							variant="primary"
-							style={styles.signInBtn}
-							onClick={handleClose}
-						>
-							anmelden
-						</Button>
-						<div style={styles.aReg}>
-							noch kein Konto?{" "}
-							<a href="#" style={styles.link}>
-								{" "}
-								hier registrieren
-							</a>
-						</div>
+						{showSignUp == true ? (
+							<input
+								type="password"
+								placeholder="Passwort wiederholen"
+								style={styles.textInput}
+								className="form-control"
+								autoFocus
+								value={checkPassword}
+								onChange={(e) => setCheckPassword(e.target.value)}
+							/>
+						) : null}
+						{error == true ? (
+							<p className="text-danger mt-2">Falsches Passwort!</p>
+						) : null}
+						{success == true ? (
+							<p className=" text-info mt-2">Anmeldung war erfolgreich!</p>
+						) : null}
+						{showSignUp == true ? (
+							<Button
+								variant="primary"
+								style={styles.signInBtn}
+								onClick={() => handleSignUp()}
+							>
+								Registrieren
+							</Button>
+						) : (
+							<Button
+								variant="primary"
+								style={styles.signInBtn}
+								onClick={() => handleSignIn()}
+							>
+								Anmelden
+							</Button>
+						)}
+
+						{showSignUp == false ? (
+							<div style={styles.aReg}>
+								noch kein Konto?{" "}
+								<a
+									href="javascript:;"
+									onClick={() => setShowSignUp(true)}
+									style={styles.link}
+								>
+									{" "}
+									hier registrieren
+								</a>
+							</div>
+						) : (
+							<div style={styles.aReg}>
+								schon ein Konto?{" "}
+								<a
+									href="javascript:;"
+									onClick={() => setShowSignUp(false)}
+									style={styles.link}
+								>
+									{" "}
+									hier anmelden
+								</a>
+							</div>
+						)}
+
 						<hr style={styles.border} />
 						<Button
 							variant="primary"
 							style={styles.signWGBtn}
 							onClick={handleClose}
 						>
-							weiter mit Google
+							weiter mit Google{" "}
+							<FontAwesomeIcon className="icon" icon={faGoogle} />
 						</Button>
 					</form>
 				</Modal.Body>
