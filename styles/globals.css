@@ -14,3 +14,7 @@ a {
 * {
   box-sizing: border-box;
 }
+
+nav {
+  color: #005B52;
+}
