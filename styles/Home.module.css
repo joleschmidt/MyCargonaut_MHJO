@@ -114,3 +114,123 @@
     flex-direction: column;
   }
 }
+
+/*************************
+********payment pages*****
+**************************
+colors
+inputfelder: #A3C4C1
+buttons: #005B52
+mittelgrün: #669D97
+
+*/
+.head {
+  padding-top: 2%;
+  color:  #669D97;
+}
+
+.btn {
+  background-color: #005B52;
+  font-weight: bold;
+  width: 450px;
+  height: 45px;
+  border-radius: 10px;   
+}
+
+.inputPaymentOne {
+  background-color: #A3C4C1;
+  width: 80%;
+  color: white;
+  margin-left: 10%;
+  padding-left: 5%;   
+}
+
+.inputPaymentTwo {
+  background-color: #A3C4C1;
+  width: 80%;
+  color: white;
+  padding-top: 2%;
+  padding-bottom: 2%;
+  border-top-left-radius: 10px;  
+  border-top-right-radius: 10px;
+  margin-left: 10%;
+  margin-top: 5%;
+  padding-left: 5%; 
+
+}
+
+.inputPaymentThree {
+  background-color: #A3C4C1;
+  width: 80%;
+  color: white;  
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  padding-bottom: 2%;
+  margin-left: 10%;
+  padding-left: 5%; 
+
+}
+
+.inputPaymentFour {
+  background-color: #669D97;
+  width: 80%;
+  color: white;  
+  border-radius: 10px;
+  margin-bottom: 5%;
+  margin-left: 10%;
+  margin-top: 10%;
+  padding-left: 5%;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  font-weight: bold;
+}
+
+.inputPaymentFive{
+  background-color: #A3C4C1;
+  width: 80%;
+  color: white;  
+  border-radius: 10px;  
+  margin-left: 10%;
+  margin-top: 3%;
+  padding-left: 5%;
+  padding-top: 1%;
+  padding-bottom: 1%; 
+
+}
+
+.btnKonto {
+  color: black;
+}
+
+.guthaben {
+  color: #005B52;
+  font-size: 64px;
+  margin-left: 35%;
+  margin-top: 5%;
+  margin-bottom: 10%;
+}
+
+.imgPaymentTree {
+  margin-left: 40%;
+}
+
+.modalPayment {
+  color:#005B52;
+}
+
+.headFont {
+  margin-left: 20%;
+  color: #005B52;
+  font-size: 50px;
+  margin-top: 5%;
+  margin-bottom: 10%;
+  
+}
+
+/*************************
+*******trackDrive pages***
+*************************/
+
+.cardTracking {
+  margin-top: 5%;
+}
