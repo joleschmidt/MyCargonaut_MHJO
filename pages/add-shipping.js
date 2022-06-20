@@ -4,7 +4,6 @@ import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import {Form} from "react-bootstrap";
 
-
 //components
 import Navbar from "../components/Navbar";
 import Button from "react-bootstrap/Button";
@@ -25,7 +24,7 @@ const Test = () => {
         firebase.firestore().collection("shippings").add({
             start: startShipping,
             end: endShipping,
-            spedition: spenditionstype,
+            typeSpedition: speditionstype,
             size: shippingSize,
             weight: shippingWeight,
             price: priceShipping,
