@@ -1,16 +1,40 @@
-import styles from "../styles/Home.module.css";
-import Image from "next/image";
-import React from "@types/react";
+import React from "react";
+import {Col, Image, Row} from "react-bootstrap";
 
-<footer className={styles.footer}>
-    <a
-        href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-        target="_blank"
-        rel="noopener noreferrer"
-    >
-        Powered by{" "}
-        <span className={styles.logo}>
-						<Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-					</span>
-    </a>
-</footer>
+const Footer = () => {
+
+    //css
+    let styles = {
+        footer: {
+            backgroundColor: '#669D97',
+            color: '#ffffff',
+            padding: 30 + 'px',
+        }
+    }
+
+    //HTML
+    return (
+        <footer style={styles.footer}>
+            <Row>
+                <Col>
+                    <Image alt={'logo'}
+                           src={'/semi_androidMyCargonautmdpi.png'}
+                           width={'150px'}
+                           height={'60px'}
+                    />
+                </Col>
+                <Col style={{textAlign: 'center'}}>
+                    <br/>
+                    <p>Impressum</p>
+                </Col>
+                <Col style={{textAlign: 'center'}}>
+                    <p>Instagram: mycargonaut</p>
+                    <p>Facebook: myCargonaut</p>
+                </Col>
+            </Row>
+        </footer>
+    )
+}
+
+export default Footer;
+

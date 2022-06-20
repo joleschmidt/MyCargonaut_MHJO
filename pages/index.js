@@ -12,6 +12,7 @@ import Button from "react-bootstrap/Button";
 import Navbar from "../components/Navbar";
 import Search from "../components/Search";
 import {Col, Row} from "react-bootstrap";
+import Footer from "../components/Footer";
 
 const Home = () => {
 
@@ -71,19 +72,24 @@ const Home = () => {
 			<br/>
 			<br/>
 
-			<Row className={'container-fluid'} style={style.container}>
+			<Row className={'container-fluid'}
+				 style={style.container}>
 				<Row style={style.row} >
 					<Col className={'col-sm'}>
 					</Col>
 
 					<Col style={style.text}>
-						<FontAwesomeIcon className={'icon fa-5x'} icon={faMagnifyingGlass} style={style.iconStep}/>
+						<FontAwesomeIcon className={'icon fa-5x'}
+										 icon={faMagnifyingGlass}
+										 style={style.iconStep}/>
 						<h5>Transportmöglichkeiten finden</h5>
 						<p>Mit MyCargonaut kannst du einfach und unkompliziert und nachhaltig Waren versenden. Privatpersonen stellen dafür freien Laderaum bei Fahrten gegen ein Entgelt zur Verfügung.</p>
 					</Col>
 
 					<Col style={style.text}>
-						<FontAwesomeIcon className={'icon fa-5x'} icon={faCirclePlus} style={style.iconStep}/>
+						<FontAwesomeIcon className={'icon fa-5x'}
+										 icon={faCirclePlus}
+										 style={style.iconStep}/>
 						<br/>
 						<h5>Fahrten anbieten</h5>
 						<br/>
@@ -91,7 +97,9 @@ const Home = () => {
 					</Col>
 
 					<Col style={style.text}>
-						<FontAwesomeIcon className={'icon fa-5x'} icon={faScaleBalanced} style={style.iconStep}/>
+						<FontAwesomeIcon className={'icon fa-5x'}
+										 icon={faScaleBalanced}
+										 style={style.iconStep}/>
 						<br/>
 						<h5>Bezahlung</h5>
 						<br/>
@@ -105,10 +113,14 @@ const Home = () => {
 
 			<br/>
 
-			<Row className={'container-fluid'} style={style.info}>
+			<Row className={'container-fluid'}
+				 style={style.info}>
 				<Row>
 					<Col style={style.colCargoImg}>
-						<Image src={'/8401.jpg'} height={320} width={540} alt={'man with laptop sitting'}/>
+						<Image src={'/8401.jpg'}
+							   height={320}
+							   width={540}
+							   alt={'man with laptop sitting'}/>
  					</Col>
 					<Col style={style.infoCargo}>
 						<h5>So wirst du Cargonaut*in</h5>
@@ -148,6 +160,8 @@ const Home = () => {
 						</Col>
 					</Row>
 				</Row>
+
+			<Footer />
 		</main>
 	);
 };

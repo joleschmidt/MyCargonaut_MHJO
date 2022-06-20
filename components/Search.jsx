@@ -102,7 +102,7 @@ const Search = () => {
         },
         col: {
             padding: 3 + 'px',
-        }
+        },
     }
 
     //HTML
