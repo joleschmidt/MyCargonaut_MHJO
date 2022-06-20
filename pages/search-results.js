@@ -1,30 +1,14 @@
-import Head from "next/head";
-import Image from "next/image";
-import styles from "../styles/Home.module.css";
-
 //components
 import Navbar from "../components/Navbar";
 import React from "react";
-import {Card, Row, Col, Form, FormControl, InputGroup} from "react-bootstrap";
-import state from "../next.config";
+import {Card, Row, Col} from "react-bootstrap";
 import {useState} from "react";
 import firebase from "../firebase";
 
 const SearchResults = () => {
     const [lists, setLists] = useState([]);
-    function handleChange(evt) {
-        const value = evt.target.value;
-        setLists({
-            ...state,
-            [evt.target.start]: value,
-            [evt.target.destination]: value,
-            [evt.target.counter]: value,
-            [evt.target.date]: value
-        });
-    }
     const getResultFromFirestore = () => {
-        firebase
-            .firestore()
+        firebase.firestore()
             .collection("rides")
             .where('start', '==', lists.start)
             .where('destination', '==', lists.destination)
@@ -40,9 +24,6 @@ const SearchResults = () => {
             });
     };
     //Styling
-    const title = {
-        color: "green",
-    }
     const inputFields = {
         width: "80%",
         margin: "10px",
@@ -61,7 +42,7 @@ const SearchResults = () => {
         justifyContent: "center",
     }
     const cardEntry = {
-        width: "50%",
+        width: "70%",
         height: "150px",
         margin: "10px",
         borderColor: "#005B52",
@@ -83,7 +64,6 @@ const SearchResults = () => {
             <Navbar/>
 
             <main>
-                <h3 style={title}>Search Results</h3>
                 <div style={inputFields} className="inputFields">
                 {/* Import Search Component */}
                 </div>
