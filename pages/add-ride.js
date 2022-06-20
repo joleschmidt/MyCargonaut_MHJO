@@ -1,16 +1,37 @@
-import React from "react";
+import React, {useState} from "react";
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
-import {Dropdown, Form} from "react-bootstrap";
+import {Form} from "react-bootstrap";
+
 
 
 //components
 import Navbar from "../components/Navbar";
 import Button from "react-bootstrap/Button";
+import firebase from "../firebase";
+
 
 const Ride = () => {
     //Funktionen
+    const [cartype, setCartype] = useState("default");
+    const [startRide, setStartRide] = useState("");
+    const [endRide, setEndRide] = useState("");
+    const [passengerQuantity, setPassengerQuantity] = useState("default");
+    const [priceRide, setPriceRide] = useState(0);
+    const [dateRide, setDateRide] = useState("");
+    const [textRide, setTextRide] = useState("");
+
+    const addRideToFirestore = () => {
+        firebase.firestore().collection("rides").add({
+            startride: startRide,
+            endride: endRide,
+            price: priceRide,
+            date: dateRide,
+            car: cartype,
+            text: textRide,
+        });
+    };
 
     //HTML
     return (
@@ -25,6 +46,14 @@ const Ride = () => {
 
             <main className="container">
                 <div className="input-position mt-5">
+                    <div>
+                        <img
+                            src='/ride.svg'
+                            alt="SVG von Ware versenden"
+                            width="90%"
+                            height="90%"
+                        />
+                    </div>
                     <div className="d-flex flex-column justify-content-center">
                             <div className="flex-row">
                                 <a className="nav-link d-flex justify-content-end link-style mb-2" href="/add-shipping">
@@ -34,101 +63,76 @@ const Ride = () => {
                                     width="3%"
                                     height="3%"
                                     className="send-icon-style"
-                                />Fahrten veröffentlichen
+                                />Speditionen veröffentlichen
                                 </a>
                             </div>
-
-
                         <Form>
                             <input
                                 type="text"
                                 className="form-control input-styles mb-3"
                                 placeholder="Von"
-                                id="firstName"
+                                id="startRide"
+                                value={startRide}
+                                onChange={(e) => setStartRide(e.target.value)}
                             />
                             <input
                                 type="text"
                                 className="form-control input-styles mb-3"
                                 placeholder="Nach"
-                                id="firstName"
+                                id="endRide"
+                                value={endRide}
+                                onChange={(e) => setEndRide(e.target.value)}
                             />
-                            <Dropdown>
-                                <Dropdown.Toggle
-                                    className="input-style mb-3 dropdown-style">
-                                    Ware
-                                </Dropdown.Toggle>
-                                <Dropdown.Menu>
-                                    <Dropdown.Item href="#">
-                                        Paket
-                                    </Dropdown.Item>
-                                    <Dropdown.Item href="#">
-                                        Fahrrad
-                                    </Dropdown.Item>
-                                    <Dropdown.Item href="#">
-                                        Möbel
-                                    </Dropdown.Item>
-                                </Dropdown.Menu>
-                            </Dropdown>
-
-                            <div className="input-position">
-                                <input
-                                    type="text"
-                                    className="form-control input-styles space-right mb-3"
-                                    placeholder="max. Maße"
-                                    id="firstName"
-                                />
-                                <input
-                                    type="text"
-                                    className="form-control input-styles space-left mb-3"
-                                    placeholder="max. Gewicht"
-                                    id="firstName"
-                                />
-                            </div>
+                            <Form.Select className="input-styles mb-3" id="selectPassenger" value={passengerQuantity} onChange={(e) => setPassengerQuantity(e.target.value)}>
+                                <option value="default" disabled hidden>
+                                    Anzahl möglicher Mitfahrer*innen
+                                </option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </Form.Select>
                             <div className="input-position">
                                 <input
                                     type="text"
                                     className="form-control input-styles space-right mb-3"
                                     placeholder="Preis"
-                                    id="firstName"
+                                    id="priceRide"
+                                    value={priceRide}
+                                    onChange={(e) => setPriceRide(e.target.value)}
                                 />
                                 <input
                                     type="text"
                                     className="form-control input-styles space-left mb-3"
                                     placeholder="Datum"
-                                    id="firstName"
+                                    id="dateRide"
+                                    value={dateRide}
+                                    onChange={(e) => setDateRide(e.target.value)}
                                 />
                             </div>
-                            <Dropdown>
-                                <Dropdown.Toggle
-                                    className="input-style mb-3 dropdown-style">
+                            <Form.Select className="input-styles mb-3" id="selectCarride" value={cartype} onChange={(e) => setCartype(e.target.value)}>
+                                <option value="default" disabled hidden>
                                     Fahrzeug
-                                </Dropdown.Toggle>
-                                <Dropdown.Menu>
-                                    <Dropdown.Item href="#">
-                                        VW Polo
-                                    </Dropdown.Item>
-                                    <Dropdown.Item href="#">
-                                        Audi A1
-                                    </Dropdown.Item>
-                                    <Dropdown.Item href="#">
-                                        Mercedes C-Klasse
-                                    </Dropdown.Item>
-                                </Dropdown.Menu>
-                            </Dropdown>
+                                </option>
+                                <option value="1">VW</option>
+                                <option value="2">BMW</option>
+                                <option value="3">Mercedes</option>
+                            </Form.Select>
+                            <textarea
+                                type="text"
+                                className="form-control input-styles mb-3"
+                                placeholder="Schreibe etwas..."
+                                id="textRide"
+                                value={textRide}
+                                onChange={(e) => setTextRide(e.target.value)}
+                            />
                         </Form>
                         <div className="d-flex justify-content-center">
-                            <Button className="btn-style mt-4 mb-4">
+                            <Button className="btn-style mt-4 mb-4" onClick={() => addRideToFirestore()}>
                                 veröffentlichen
                             </Button>
                         </div>
-                    </div>
-                    <div>
-                        <img
-                            src='/delivery.svg'
-                            alt="SVG von Ware versenden"
-                            width="90%"
-                            height="90%"
-                        />
                     </div>
                 </div>
             </main>
@@ -150,3 +154,4 @@ const Ride = () => {
 };
 
 export default Ride;
+

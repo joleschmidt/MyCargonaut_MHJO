@@ -69,3 +69,6 @@ a {
   align-items: center;
 }
 
+.form-select{
+  background-image: none!important;
+}
