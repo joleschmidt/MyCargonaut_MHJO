@@ -15,7 +15,7 @@ const Profil = () => {
 		<div className="m-0">
 			<Navbar />
 			<main>
-				{/*algin div center */}
+				{/*algin div center T*/}
 				<div className="container flex-column" style={styles.profileInfo}>
 					<div className="row justify-content-center m-3">
 						<img
