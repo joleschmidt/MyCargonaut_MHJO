@@ -10,14 +10,10 @@ import {
 import Button from "react-bootstrap/Button";
 //components
 import Navbar from "../components/Navbar";
-import {Col, Form, Row} from "react-bootstrap";
-import firebase from "../firebase";
+import Search from "../components/Search";
+import {Col, Row} from "react-bootstrap";
 
 const Home = () => {
-	const [setShow] = useState(false);
-	const handleShow = () => setShow(true);
-
-	//Funktionen
 
 	//HTML
 	return (
@@ -27,49 +23,8 @@ const Home = () => {
 			<Col style={style.imageOne}>
 				<Image src={'/10109.jpg'} alt={'man with phone in front of car'} width={650} height={380}/>
 			</Col>
-			<Col className={'container-fluid'}>
-				<Row>
-					<Col>
-					</Col>
 
-					<Col style={style.search}>
-						<h5>Waren senden</h5>
-						<br/>
-						<Row>
-							<Form>
-								<Row style={{width: '900px'}}>
-									<Col>
-										<Form.Control type={'text'} placeholder={'Von'} style={style.input}/>
-									</Col>
-									<Col>
-										<Form.Control type={'text'} placeholder={'Nach'} style={style.input}/>
-									</Col>
-									<Col>
-										<Form.Select style={style.input}>
-											<option>Was?</option>
-											<option value="1">Fahrrad</option>
-											<option value="2">Pakete</option>
-											<option value="3">Möbelstücke</option>
-										</Form.Select>
-									</Col>
-									<Col>
-										<Form.Control type={'number'} placeholder={'Wann?'} style={style.input}/>
-									</Col>
-									<Col>
-										<Button style={{backgroundColor: '#ffffff'}}>
-											<FontAwesomeIcon onClick={doSearch} className={'icon'} icon={faMagnifyingGlass} style={style.searchButton}/>
-										</Button>
-									</Col>
-								</Row>
-							</Form>
-						</Row>
-					</Col>
-
-					<Col>
-					</Col>
-				</Row>
-			</Col>
-
+			<Search />
 			<br/>
 			<br/>
 
@@ -144,7 +99,7 @@ const Home = () => {
 							<Col className={'col-1'}>
 							</Col>
 							<Col>
-								<Button style={style.button} onClick={handleShow}>jetzt starten</Button>
+								<Button style={style.button}>jetzt starten</Button>
 							</Col>
 						</Row>
 						</Col>
