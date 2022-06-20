@@ -4,6 +4,10 @@ import {Col, Row, Form} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
 import firebase from "firebase/app";
+import DatePicker from "react-datepicker";
+
+// import required css from library
+import "react-datepicker/dist/react-datepicker.css";
 
 const Search = () => {
 
@@ -15,7 +19,7 @@ const Search = () => {
     console.log(destination);
     const [goods, setGoods] = useState('');
     console.log(goods);
-    const [date, setDate] = useState('');
+    const [date, setDate] = useState(null);
     console.log(date);
 
     const changeSearchToDrive = () => searchDrive(true);
@@ -131,11 +135,17 @@ const Search = () => {
                                     </Form.Select>
                                 </Col>
                                 <Col>
-                                    <Form.Control value={date}
-                                                  onChange={(e) => setDate(e.target.value)}
-                                                  type={'number'}
-                                                  placeholder={'Wann?'}
-                                                  style={style.input}/>
+                                    {/*<Form.Control value={date}*/}
+                                    {/*              onChange={(e) => setDate(e.target.value)}*/}
+                                    {/*              type={'number'}*/}
+                                    {/*              placeholder={'Wann?'}*/}
+                                    {/*              style={style.input}/>*/}
+                                    <DatePicker
+                                        selected={date}
+                                        onChange={selectedDate => setDate(selectedDate)}
+                                        dateFormat={'dd.MM.yyyy'}
+                                        minDate={new Date()}
+                                    />
                                 </Col>
                                 <Col>
                                     <Button style={{backgroundColor: '#ffffff'}}>
