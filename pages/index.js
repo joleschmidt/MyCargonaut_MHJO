@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React, { useState } from "react";
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
 	faCirclePlus,
@@ -14,6 +14,49 @@ import Search from "../components/Search";
 import {Col, Row} from "react-bootstrap";
 
 const Home = () => {
+
+	//CSS
+	let style = {
+		imageOne: {
+			textAlign: 'center',
+		},
+		container: {
+			backgroundColor: '#669D97',
+			color: '#ffffff',
+		},
+		text: {
+			textAlign: 'center',
+		},
+		row: {
+			padding: 30,
+		},
+		column: {
+			columnWidth: 30 + 'px',
+		},
+		info: {
+			color: '#4F4F4F',
+		},
+		button: {
+			border: 0 + 'px',
+			borderRadius: 15 + 'px',
+			backgroundColor: '#669D97',
+			color: '#ffffff',
+			paddingLeft: 35 + 'px',
+			paddingRight:  35 + 'px',
+		},
+		infoCargo: {
+			paddingLeft: 0 + 'px',
+			paddingBottom: 50 + 'px',
+			paddingTop: 50 + 'px',
+		},
+		colCargoImg: {
+			paddingLeft: 140 + 'px',
+			paddingTop: 50 + 'px',
+		},
+		iconStep: {
+			padding: 20 + 'px',
+		}
+	}
 
 	//HTML
 	return (
@@ -34,13 +77,13 @@ const Home = () => {
 					</Col>
 
 					<Col style={style.text}>
-						<FontAwesomeIcon className={'icon fa-5x'} icon={faMagnifyingGlass} style={{padding: 20 + 'px'}}/>
+						<FontAwesomeIcon className={'icon fa-5x'} icon={faMagnifyingGlass} style={style.iconStep}/>
 						<h5>Transportmöglichkeiten finden</h5>
 						<p>Mit MyCargonaut kannst du einfach und unkompliziert und nachhaltig Waren versenden. Privatpersonen stellen dafür freien Laderaum bei Fahrten gegen ein Entgelt zur Verfügung.</p>
 					</Col>
 
 					<Col style={style.text}>
-						<FontAwesomeIcon className={'icon fa-5x'} icon={faCirclePlus} style={{padding: 20 + 'px'}}/>
+						<FontAwesomeIcon className={'icon fa-5x'} icon={faCirclePlus} style={style.iconStep}/>
 						<br/>
 						<h5>Fahrten anbieten</h5>
 						<br/>
@@ -48,7 +91,7 @@ const Home = () => {
 					</Col>
 
 					<Col style={style.text}>
-						<FontAwesomeIcon className={'icon fa-5x'} icon={faScaleBalanced} style={{padding: 20 + 'px'}}/>
+						<FontAwesomeIcon className={'icon fa-5x'} icon={faScaleBalanced} style={style.iconStep}/>
 						<br/>
 						<h5>Bezahlung</h5>
 						<br/>
@@ -64,10 +107,10 @@ const Home = () => {
 
 			<Row className={'container-fluid'} style={style.info}>
 				<Row>
-					<Col style={{paddingLeft: 140 + 'px', paddingTop: 50 + 'px'}}>
+					<Col style={style.colCargoImg}>
 						<Image src={'/8401.jpg'} height={320} width={540} alt={'man with laptop sitting'}/>
  					</Col>
-					<Col style={{paddingLeft: 0 + 'px', paddingBottom: 50 + 'px', paddingTop: 50 + 'px'}}>
+					<Col style={style.infoCargo}>
 						<h5>So wirst du Cargonaut*in</h5>
 						<br/>
 						<Row>
@@ -79,7 +122,7 @@ const Home = () => {
 							</Col>
 						</Row>
 						<Row>
-							<Col className={'col-1'} style={{columnWidth: 30 + 'px'}}>
+							<Col className={'col-1'}>
 								<h6>2.</h6>
 							</Col>
 							<Col>
@@ -110,51 +153,3 @@ const Home = () => {
 };
 
 export default Home;
-
-let style = {
-	imageOne: {
-		textAlign: 'center',
-	},
-	imageTwo: {
-	},
-	search: {
-		backgroundColor: '#669D97',
-		color: '#ffffff',
-		padding: 30,
-		borderRadius: 15 + 'px',
-	},
-	container: {
-		backgroundColor: '#669D97',
-		color: '#ffffff',
-	},
-	text: {
-		textAlign: 'center',
-	},
-	row: {
-		padding: 30,
-	},
-	column: {
-		columnWidth: 30 + 'px',
-	},
-	info: {
-		color: '#4F4F4F',
-	},
-	button: {
-		border: 0 + 'px',
-		borderRadius: 15 + 'px',
-		backgroundColor: '#669D97',
-		color: '#ffffff',
-		paddingLeft: 35 + 'px',
-		paddingRight:  35 + 'px',
-	},
-	searchButton: {
-		color: '#669D97',
-		border: 0 + 'px',
-		borderRadius: 15 + 'px'
-	},
-	input: {
-		backgroundColor: '#A3C4C1',
-		color: '#ffffff',
-		border: 0 + 'px',
-	},
-}

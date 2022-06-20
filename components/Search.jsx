@@ -11,87 +11,103 @@ import "react-datepicker/dist/react-datepicker.css";
 
 const Search = () => {
 
-    const [result, setResult] = useState([]);
-    console.log(result);
+    //Values of input-fields
     const [start, setStart] = useState('');
-    console.log(start);
     const [destination, setDestination] = useState('');
-    console.log(destination);
     const [goods, setGoods] = useState('');
-    console.log(goods);
-    const [date, setDate] = useState(null);
-    console.log(date);
+    const [passengers, setPassengers] = useState(0);
+    const [date, setDate] = useState('');
 
-    const changeSearchToDrive = () => searchDrive(true);
+    //value and functions for conditional rendering
+    const [searchDrive, setSearchDrive] = useState(false);
 
-    //Funktionen
+    const changeSearchToDrive = () => setSearchDrive(true);
+    const changeSearchToGoods = () => setSearchDrive(false);
+
+    //store searchresult
+    const [result, setResult] = useState([]);
+
+    //functions
     const doSearch = () => {
-        firebase
-            .firestore()
-            .collection('rides')
-            .where('start', '==', start)
-            .where('destination', '==', destination)
-            .where('goods', '==', goods)
-            .where('date', '==', date)
-            .orderBy('price', 'asc')
-            .onSnapshot((snapshot) => {
-                const result = snapshot.docs.map((doc) => ({
-                    id: doc.id,
-                    ...doc.data(),
-                }));
-                setResult(result);
-            })
+        if (searchDrive) {
+            firebase
+                .firestore()
+                .collection('rides')
+                .where('start', '==', start)
+                .where('destination', '==', destination)
+                .where('passengers', '==', passengers)
+                .where('date', '==', date)
+                .orderBy('price', 'asc')
+                .onSnapshot((snapshot) => {
+                    const result = snapshot.docs.map((doc) => ({
+                        id: doc.id,
+                        ...doc.data(),
+                    }));
+                    setResult(result);
+                });
+        } else {
+            firebase
+                .firestore()
+                .collection('goods')
+                .where('start', '==', start)
+                .where('destination', '==', destination)
+                .where('goods', '==', goods)
+                .where('date', '==', date)
+                .orderBy('price', 'asc')
+                .onSnapshot((snapshot) => {
+                    const result = snapshot.docs.map((doc) => ({
+                        id: doc.id,
+                        ...doc.data(),
+                    }));
+                    setResult(result);
+                });
+        }
+
     }
 
+    //css
     let style = {
-        imageOne: {
-            textAlign: 'center',
-        },
-        imageTwo: {},
         search: {
             backgroundColor: '#669D97',
             color: '#ffffff',
-            padding: 30,
+            paddingTop: 30 + 'px',
+            paddingBottom: 30 + 'px',
+            paddingLeft: 90 + 'px',
             borderRadius: 15 + 'px',
-        },
-        container: {
-            backgroundColor: '#669D97',
-            color: '#ffffff',
-        },
-        text: {
-            textAlign: 'center',
-        },
-        row: {
-            padding: 30,
-        },
-        column: {
-            columnWidth: 30 + 'px',
-        },
-        info: {
-            color: '#4F4F4F',
-        },
-        button: {
-            border: 0 + 'px',
-            borderRadius: 15 + 'px',
-            backgroundColor: '#669D97',
-            color: '#ffffff',
-            paddingLeft: 35 + 'px',
-            paddingRight: 35 + 'px',
         },
         searchButton: {
-            color: '#669D97',
-            border: 0 + 'px',
-            borderRadius: 15 + 'px'
+            backgroundColor: '#ffffff',
+            borderColor: '#ffffff',
+            borderRadius: 0 + 'px',
+            borderTopRightRadius: 15 + 'px',
+            borderBottomRightRadius: 15 + 'px',
+            height: 60 + 'px',
+            width: 60 + 'px',
         },
         input: {
             backgroundColor: '#A3C4C1',
-            color: '#ffffff',
             border: 0 + 'px',
+            height: 60 + 'px',
+            borderRadius: 0 + 'px',
+            color: '#ffffff'
         },
+        inputFirst: {
+            backgroundColor: '#A3C4C1',
+            border: 0 + 'px',
+            height: 60 + 'px',
+            borderRadius: 0 + 'px',
+            borderTopLeftRadius: 15 + 'px',
+            borderBottomLeftRadius: 15 + 'px',
+            color: '#ffffff'
+        },
+        col: {
+            padding: 3 + 'px',
+        }
     }
 
+    //HTML
     return (
-        <Col className={'container-fluid'}>
+        <Col>
             <Row>
                 <Col>
                 </Col>
@@ -99,42 +115,69 @@ const Search = () => {
                 <Col style={style.search}>
                     <Row>
                         <Col>
-                            <h5 style={{textAlign: 'left'}}>Waren senden</h5>
+                            {!searchDrive &&
+                                <h5 style={{textAlign: 'left', textDecoration: 'underline', paddingLeft: 40 + 'px'}}
+                                    onClick={changeSearchToGoods}
+                                >Waren senden</h5>
+                            }
+                            {searchDrive &&
+                                <h5 style={{textAlign: 'left', paddingLeft: 40 + 'px'}}
+                                    onClick={changeSearchToGoods}
+                                >Waren senden</h5>
+                            }
                         </Col>
                         <Col>
-                            <h5 onClick={changeSearchToDrive} style={{textAlign: 'right'}}>Mitfahrgelegenheit suchen</h5>
+                            {!searchDrive &&
+                                <h5 onClick={changeSearchToDrive}
+                                    style={{textAlign: 'left'}}
+                                >Mitfahrgelegenheit suchen</h5>
+                            }
+                            {searchDrive &&
+                                <h5 onClick={changeSearchToDrive}
+                                    style={{textAlign: 'left', textDecoration: 'underline'}}
+                                >Mitfahrgelegenheit suchen</h5>
+                            }
                         </Col>
                     </Row>
 
                     <br/>
-                    <br/>
 
                     <Row>
                         <Form>
-                            <Row style={{width: '900px'}}>
-                                <Col>
+                            <Row style={{width: '800px'}}>
+                                <Col style={style.col}>
                                     <Form.Control value={start}
                                                   onChange={(e) => setStart(e.target.value)}
-                                                  type={'text'} placeholder={'Von'}
-                                                  style={style.input}/>
+                                                  type={'text'}
+                                                  placeholder={'Von'}
+                                                  style={style.inputFirst}/>
                                 </Col>
-                                <Col>
+                                <Col style={style.col}>
                                     <Form.Control value={destination}
                                                   onChange={(e) => setDestination(e.target.value)}
                                                   type={'text'}
                                                   placeholder={'Nach'}
                                                   style={style.input}/>
                                 </Col>
-                                <Col>
-                                    <Form.Select style={style.input}
-                                                 onChange={(e) => setGoods(e.target.value)}>
-                                        <option>Was?</option>
-                                        <option value="1">Fahrrad</option>
-                                        <option value="2">Pakete</option>
-                                        <option value="3">Möbelstücke</option>
-                                    </Form.Select>
+                                <Col style={style.col}>
+                                    {!searchDrive &&
+                                        <Form.Select style={style.input}
+                                                     onChange={(e) => setGoods(e.target.value)}>
+                                            <option>Was?</option>
+                                            <option value="1">Fahrrad</option>
+                                            <option value="2">Pakete</option>
+                                            <option value="3">Möbelstücke</option>
+                                        </Form.Select>
+                                    }
+                                    {searchDrive &&
+                                        <Form.Control value={passengers}
+                                                      onChange={(e) => setPassengers(e.target.value)}
+                                                      type={'number'}
+                                                      placeholder={'Wie viele?'}
+                                                      style={style.input}/>
+                                    }
                                 </Col>
-                                <Col>
+                                <Col style={style.col}>
                                     {/*<Form.Control value={date}*/}
                                     {/*              onChange={(e) => setDate(e.target.value)}*/}
                                     {/*              type={'number'}*/}
@@ -147,10 +190,13 @@ const Search = () => {
                                         minDate={new Date()}
                                     />
                                 </Col>
-                                <Col>
-                                    <Button style={{backgroundColor: '#ffffff'}}>
-                                        <FontAwesomeIcon onClick={() => doSearch()} className={'icon'}
-                                                         icon={faMagnifyingGlass} style={style.searchButton}/>
+                                <Col style={style.col}>
+                                    <Button style={style.searchButton}>
+                                        <FontAwesomeIcon onClick={() => doSearch()}
+                                                         className={'icon fa-2x'}
+                                                         icon={faMagnifyingGlass}
+                                                         style={{color: '#669D97'}}
+                                        />
                                     </Button>
                                 </Col>
                             </Row>
