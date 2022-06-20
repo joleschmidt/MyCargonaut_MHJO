@@ -9,7 +9,7 @@ import Navbar from "../components/Navbar";
 import Button from "react-bootstrap/Button";
 import firebase from "../firebase";
 
-const Test = () => {
+const Shipping = () => {
     //Funktionen
     const [cartype, setCartype] = useState("default");
     const [startShipping, setStartShipping] = useState("");
@@ -31,6 +31,7 @@ const Test = () => {
             date: dateShipping,
             car: cartype,
         });
+        console.log("add shippings to firestore");
     }
 
     //HTML
@@ -165,4 +166,4 @@ const Test = () => {
     );
 };
 
-export default Test;
+export default Shipping;

@@ -18,7 +18,7 @@ const Ride = () => {
     const [startRide, setStartRide] = useState("");
     const [endRide, setEndRide] = useState("");
     const [passengerQuantity, setPassengerQuantity] = useState("default");
-    const [priceRide, setPriceRide] = useState(0);
+    const [priceRide, setPriceRide] = useState("");
     const [dateRide, setDateRide] = useState("");
     const [textRide, setTextRide] = useState("");
 
@@ -26,11 +26,13 @@ const Ride = () => {
         firebase.firestore().collection("rides").add({
             startride: startRide,
             endride: endRide,
+            passenger: passengerQuantity,
             price: priceRide,
             date: dateRide,
             car: cartype,
             text: textRide,
         });
+        console.log("add rides to firestore");
     };
 
     //HTML
