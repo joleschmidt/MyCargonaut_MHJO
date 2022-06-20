@@ -63,7 +63,6 @@ const Home = () => {
 	return (
 		<main>
 			<Navbar />
-
 			<Col style={style.imageOne}>
 				<Image src={'/10109.jpg'} alt={'man with phone in front of car'} width={650} height={380}/>
 			</Col>
@@ -105,7 +104,6 @@ const Home = () => {
 						<br/>
 						<p>Lade dein MyCargonaut-Konto ganz einfach über digitale Zahlungsdienste auf. Auf dieses Konto werden dir Einkünfte von Fahrten ebenfalls gutgeschrieben.</p>
 					</Col>
-
 					<Col className={'col-sm'}>
 					</Col>
 				</Row>
