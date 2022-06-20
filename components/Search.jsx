@@ -3,11 +3,12 @@ import Button from "react-bootstrap/Button";
 import {Col, Row, Form} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
+import firebase from "firebase/app";
 
 const Search = () => {
 
-    /*const [result, setResult] = useState([]);
-    console.log(result);*/
+    const [result, setResult] = useState([]);
+    console.log(result);
     const [start, setStart] = useState('');
     console.log(start);
     const [destination, setDestination] = useState('');
@@ -21,6 +22,21 @@ const Search = () => {
 
     //Funktionen
     const doSearch = () => {
+        firebase
+            .firestore()
+            .collection('rides')
+            .where('start', '==', start)
+            .where('destination', '==', destination)
+            .where('goods', '==', goods)
+            .where('date', '==', date)
+            .orderBy('price', 'asc')
+            .onSnapshot((snapshot) => {
+                const result = snapshot.docs.map((doc) => ({
+                    id: doc.id,
+                    ...doc.data(),
+                }));
+                setResult(result);
+            })
     }
 
     let style = {
