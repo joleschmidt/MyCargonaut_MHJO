@@ -41,6 +41,16 @@ const Navbar = () => {
 								FC Template
 							</a>
 						</li>
+						<li>
+							<a className="nav-link" href="/search-results">
+								Search Results
+							</a>
+						</li>
+						<li>
+							<a className="nav-link" href="/offer-details">
+								Offer Details
+							</a>
+						</li>
 					</ul>
 					<div className="nav-item">
 						<a className="navbar-brand" aria-current="page" href="/profile">
