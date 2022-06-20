@@ -21,7 +21,7 @@ const Profil = () => {
 			<Navbar />
 
 			<main className="container">
-				{/*algin div center */}
+				{/*algin div center l*/}
 				<div className="row justify-content-center m-3">
 					<img
 						className="rounded-circle  col-sm-auto"
