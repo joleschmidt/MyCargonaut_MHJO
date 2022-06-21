@@ -18,10 +18,9 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 `npm run build`
 
-## Firebase Hosting
+## Firebase hosting / deploying
 
-update project ---> `firebase deploy --only hosting`
-(delete .firebase folder if project is not updated correctly)
+workflow in `Github Actions update and deploys website automatically` after push and successfull test
 
 ## Firebase testing / debugging
 
@@ -53,7 +52,3 @@ update project ---> `firebase deploy --only hosting`
 - [Firebase / React Hooks](https://cloudnweb.dev/2020/02/building-an-app-with-firebase-and-react-hooks-in-simple-way/) - Add-, Get-, Delete Functions.
 
 ## Misc
-
-`use <div> instead of <p>`
-
-- `<p>` is not supported in Next.js

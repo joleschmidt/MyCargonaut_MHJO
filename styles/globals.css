@@ -1,18 +1,22 @@
 html,
 body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+	padding: 0;
+	margin: 0;
+	color: #4f4f4f;
 }
 
 a {
-  color: inherit;
-  text-decoration: none;
+	color: inherit;
+	text-decoration: none;
 }
 
 * {
-  box-sizing: border-box;
+	box-sizing: border-box;
+	font-family: "Montserrat", sans-serif;
+}
+
+nav {
+  color: #005B52;
 }
 .input-styles{
   background-color: #A3C4C1!important;
@@ -72,3 +76,13 @@ a {
 .form-select{
   background-image: none!important;
 }
+
+.datePicker {
+  background-color: #A3C4C1;
+  border: 0;
+  line-height: 58px;
+  border-radius: 0;
+  color: #ffffff;
+  padding-left: 10px;
+}
+
