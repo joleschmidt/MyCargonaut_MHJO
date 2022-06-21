@@ -38,8 +38,12 @@ const Navbar = () => {
 					<li>
 						<a>Suche</a>
 					</li>
+					<li>
+						<a className="test" href="/add-shipping">Angebot veröffentlichen</a>
+					</li>
 				</ul>
 				<ul className="navbar-nav">
+
 					<li className="nav-item">
 						<FontAwesomeIcon
 							className={"icon fa-2x"}
