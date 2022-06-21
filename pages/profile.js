@@ -8,6 +8,7 @@ import { faCog } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ReviewModal from "../components/ReviewModal";
 import { Button } from "react-bootstrap";
+import Footer from "../components/Footer";
 
 const Profil = () => {
 	//Funktionen
@@ -114,6 +115,7 @@ const Profil = () => {
 				showReviewModal={showReview}
 				setReviewModal={setShowReview}
 			/>
+			<Footer />
 		</div>
 	);
 };
