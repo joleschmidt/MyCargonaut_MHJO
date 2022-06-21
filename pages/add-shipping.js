@@ -3,12 +3,14 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import { Form } from "react-bootstrap";
+import DatePicker from "react-datepicker";
 
 //components
 import Navbar from "../components/Navbar";
 import Button from "react-bootstrap/Button";
 import firebase from "../firebase";
 import Footer from "../components/Footer";
+import "react-datepicker/dist/react-datepicker.css";
 
 const Shipping = () => {
 	//Funktionen
@@ -29,7 +31,7 @@ const Shipping = () => {
 			size: shippingSize,
 			weight: shippingWeight,
 			price: priceShipping,
-			date: dateShipping,
+			date: dateShipping.toString(),
 			car: cartype,
 		});
 		console.log("add shippings to firestore");
@@ -115,13 +117,13 @@ const Shipping = () => {
 										value={priceShipping}
 										onChange={(e) => setPriceShipping(e.target.value)}
 									/>
-									<input
-										type="text"
-										className="form-control input-styles space-left mb-3"
-										placeholder="Datum"
-										id="dateShipping"
-										value={dateShipping}
-										onChange={(e) => setDateShipping(e.target.value)}
+									<DatePicker
+										selected={dateShipping}
+										onChange={selectedDate => setDateShipping(selectedDate)}
+										dateFormat={'dd.MM.yyyy'}
+										minDate={new Date()}
+										className={'datePicker'}
+										placeholderText={'Wann?'}
 									/>
 								</div>
 								<Form.Select

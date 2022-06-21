@@ -2,13 +2,15 @@ import React, { useState } from "react";
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
-import { Form } from "react-bootstrap";
+import {Col, Form} from "react-bootstrap";
+import DatePicker from "react-datepicker";
 
 //components
 import Navbar from "../components/Navbar";
 import Button from "react-bootstrap/Button";
 import firebase from "../firebase";
 import Footer from "../components/Footer";
+import "react-datepicker/dist/react-datepicker.css";
 
 const Ride = () => {
 	//Funktionen
@@ -20,13 +22,14 @@ const Ride = () => {
 	const [dateRide, setDateRide] = useState("");
 	const [textRide, setTextRide] = useState("");
 
+
 	const addRideToFirestore = () => {
 		firebase.firestore().collection("rides").add({
 			startride: startRide,
 			endride: endRide,
 			passenger: passengerQuantity,
 			price: priceRide,
-			date: dateRide,
+			date: dateRide.toString(),
 			car: cartype,
 			text: textRide,
 		});
@@ -111,14 +114,14 @@ const Ride = () => {
 									value={priceRide}
 									onChange={(e) => setPriceRide(e.target.value)}
 								/>
-								<input
-									type="text"
-									className="form-control input-styles space-left mb-3"
-									placeholder="Datum"
-									id="dateRide"
-									value={dateRide}
-									onChange={(e) => setDateRide(e.target.value)}
-								/>
+									<DatePicker
+										selected={dateRide}
+										onChange={selectedDate => setDateRide(selectedDate)}
+										dateFormat={'dd.MM.yyyy'}
+										minDate={new Date()}
+										className={'datePicker'}
+										placeholderText={'Wann?'}
+									/>
 							</div>
 							<Form.Select
 								className="input-styles mb-3"
@@ -159,3 +162,10 @@ const Ride = () => {
 };
 
 export default Ride;
+
+//css
+let style = {
+	col: {
+		padding: 3 + 'px',
+	},
+}
