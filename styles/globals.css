@@ -18,3 +18,13 @@ a {
 nav {
   color: #005B52;
 }
+
+.datePicker {
+  background-color: #A3C4C1;
+  border: 0;
+  line-height: 58px;
+  border-radius: 0;
+  color: #ffffff;
+  padding-left: 10px;
+}
+

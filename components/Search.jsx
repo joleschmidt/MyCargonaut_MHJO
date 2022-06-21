@@ -3,7 +3,7 @@ import Button from "react-bootstrap/Button";
 import {Col, Row, Form} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
-import firebase from "firebase/app";
+import firebase from '../firebase';
 import DatePicker from "react-datepicker";
 
 // import required css from library
@@ -30,36 +30,32 @@ const Search = () => {
     //functions
     const doSearch = () => {
         if (searchDrive) {
-            firebase
-                .firestore()
+            firebase.firestore()
                 .collection('rides')
-                .where('start', '==', start)
-                .where('destination', '==', destination)
-                .where('passengers', '==', passengers)
-                .where('date', '==', date)
-                .orderBy('price', 'asc')
+                .where('startride', '==', start)
+                .where('endride', '==', destination)
+                .where('passenger', '==', passengers)
                 .onSnapshot((snapshot) => {
                     const result = snapshot.docs.map((doc) => ({
                         id: doc.id,
                         ...doc.data(),
                     }));
                     setResult(result);
+                    console.log(result);
                 });
         } else {
-            firebase
-                .firestore()
-                .collection('goods')
+            firebase.firestore()
+                .collection('shippings')
                 .where('start', '==', start)
-                .where('destination', '==', destination)
-                .where('goods', '==', goods)
-                .where('date', '==', date)
-                .orderBy('price', 'asc')
+                .where('end', '==', destination)
+                .where('typeSpedition', '==', goods)
                 .onSnapshot((snapshot) => {
                     const result = snapshot.docs.map((doc) => ({
                         id: doc.id,
                         ...doc.data(),
                     }));
                     setResult(result);
+                    console.log(result);
                 });
         }
 
@@ -89,7 +85,7 @@ const Search = () => {
             border: 0 + 'px',
             height: 60 + 'px',
             borderRadius: 0 + 'px',
-            color: '#ffffff'
+            color: '#ffffff',
         },
         inputFirst: {
             backgroundColor: '#A3C4C1',
@@ -163,7 +159,7 @@ const Search = () => {
                                     {!searchDrive &&
                                         <Form.Select style={style.input}
                                                      onChange={(e) => setGoods(e.target.value)}>
-                                            <option>Was?</option>
+                                            <option style={{color: '#4F4F4F'}}>Was?</option>
                                             <option value="1">Fahrrad</option>
                                             <option value="2">Pakete</option>
                                             <option value="3">Möbelstücke</option>
@@ -178,16 +174,13 @@ const Search = () => {
                                     }
                                 </Col>
                                 <Col style={style.col}>
-                                    {/*<Form.Control value={date}*/}
-                                    {/*              onChange={(e) => setDate(e.target.value)}*/}
-                                    {/*              type={'number'}*/}
-                                    {/*              placeholder={'Wann?'}*/}
-                                    {/*              style={style.input}/>*/}
                                     <DatePicker
                                         selected={date}
                                         onChange={selectedDate => setDate(selectedDate)}
                                         dateFormat={'dd.MM.yyyy'}
                                         minDate={new Date()}
+                                        className={'datePicker'}
+                                        placeholderText={'Wann?'}
                                     />
                                 </Col>
                                 <Col style={style.col}>
