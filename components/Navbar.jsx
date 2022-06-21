@@ -20,6 +20,12 @@ const Navbar = () => {
 			width: 130,
 			marginLeft: "15px",
 		},
+		link: {
+			cursor: "default",
+			textDecoration: "none",
+			color: "#005B52",
+			marginLeft: "15px",
+		},
 	};
 
 	//HTML
@@ -39,11 +45,12 @@ const Navbar = () => {
 						<a>Suche</a>
 					</li>
 					<li>
-						<a className="test" href="/add-shipping">Angebot veröffentlichen</a>
+						<a className="test" href="/add-shipping" style={styles.link}>
+							Angebot veröffentlichen
+						</a>
 					</li>
 				</ul>
 				<ul className="navbar-nav">
-
 					<li className="nav-item">
 						<FontAwesomeIcon
 							className={"icon fa-2x"}
