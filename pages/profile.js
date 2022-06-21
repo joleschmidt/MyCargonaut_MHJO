@@ -34,7 +34,7 @@ const Profil = () => {
 					</div>
 					<div className="d-flex flex-row justify-content-center align-items-center">
 						<h2 style={styles.name}>Hans Peter</h2>
-						<a href="#">
+						<a href="/paymentProcess">
 							<FontAwesomeIcon
 								className="icon"
 								icon={faCog}
