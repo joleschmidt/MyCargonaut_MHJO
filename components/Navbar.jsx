@@ -2,10 +2,11 @@ import React, {useState} from "react";
 import {Image, Nav} from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faUser} from "@fortawesome/free-solid-svg-icons";
+import SignInModal from "./SignInModal";
 
 const Navbar = () => {
 	//functions
-	const [setShow] = useState(false);
+	const [show, setShow] = useState(false);
 	const handleShow = () => setShow(true);
 
 	//css
@@ -40,6 +41,7 @@ const Navbar = () => {
 								 onClick={handleShow}
 								 style={{color: '#005B52', position: 'absolute', right: 15 + 'px'}}/>
 			</div>
+			<SignInModal showModal={show} setShowModal={setShow} />
 		</Nav>
 	);
 };

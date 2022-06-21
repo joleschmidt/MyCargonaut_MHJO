@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React from "react";
+import React, {useState} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
 	faCirclePlus,
@@ -13,8 +13,13 @@ import Navbar from "../components/Navbar";
 import Search from "../components/Search";
 import {Col, Row} from "react-bootstrap";
 import Footer from "../components/Footer";
+import SignInModal from "../components/SignInModal";
 
 const Home = () => {
+
+	//functions
+	const [show, setShow] = useState(false);
+	const handleShow = () => setShow(true);
 
 	//CSS
 	let style = {
@@ -152,12 +157,17 @@ const Home = () => {
 							<Col className={'col-1'}>
 							</Col>
 							<Col>
-								<Button style={style.button}>jetzt starten</Button>
+								<Button style={style.button}
+										onClick={handleShow}
+								>jetzt starten</Button>
 							</Col>
 						</Row>
 						</Col>
 					</Row>
 				</Row>
+
+			<SignInModal showModal={show} setShowModal={setShow} />
+
 
 			<Footer />
 		</main>
