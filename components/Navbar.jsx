@@ -1,4 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
+import { Image, Nav } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
+import SignInModal from "./SignInModal";
 
 const Navbar = () => {
 	//functions
@@ -34,8 +38,12 @@ const Navbar = () => {
 					<li>
 						<a>Suche</a>
 					</li>
+					<li>
+						<a className="test" href="/add-shipping">Angebot veröffentlichen</a>
+					</li>
 				</ul>
 				<ul className="navbar-nav">
+
 					<li className="nav-item">
 						<FontAwesomeIcon
 							className={"icon fa-2x"}
@@ -47,11 +55,6 @@ const Navbar = () => {
 								right: "100px",
 							}}
 						/>
-					</li>
-					<li>
-						<a className="nav-item" href="/add-ride">
-							Angebot veröffentlichen
-						</a>
 					</li>
 					<li className="nav-item">
 						<a href="/profile">
