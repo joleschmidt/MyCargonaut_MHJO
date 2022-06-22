@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Head from "next/head";
 import Image from "next/image";
 
@@ -6,10 +6,15 @@ import Image from "next/image";
 import Navbar from "../components/Navbar";
 import { faCog } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import ReviewModal from "../components/ReviewModal";
+import { Button } from "react-bootstrap";
+import Footer from "../components/Footer";
 
 const Profil = () => {
 	//Funktionen
 
+	const [showReview, setShowReview] = useState(false);
+	const handleShowReview = () => setShowReview(true);
 	//HTML
 	return (
 		<div className="m-0">
@@ -29,7 +34,7 @@ const Profil = () => {
 					</div>
 					<div className="d-flex flex-row justify-content-center align-items-center">
 						<h2 style={styles.name}>Hans Peter</h2>
-						<a href="#">
+						<a href="/paymentProcess">
 							<FontAwesomeIcon
 								className="icon"
 								icon={faCog}
@@ -104,7 +109,13 @@ const Profil = () => {
 				className=" d-flex flex-column align-items-center"
 			>
 				<h3 style={styles.reviewTitle}>Bewertungen</h3>
+				<Button onClick={handleShowReview}>Bewerten</Button>
 			</div>
+			<ReviewModal
+				showReviewModal={showReview}
+				setReviewModal={setShowReview}
+			/>
+			<Footer />
 		</div>
 	);
 };
