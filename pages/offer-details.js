@@ -43,8 +43,8 @@ const OfferDetails = () => {
         <div className="container">
             <Navbar />
             <div style={pageBody}>
-                <div className="rideInfos">
-                    <Row style={{margin: "10px"}}>
+                <Container className="rideInfos">
+                    <Row style={{margin: "10px"}} className="justify-content-md-center">
                         <Col>
                             {/* Start City */}
                             <h2>Berlin</h2>
@@ -61,7 +61,7 @@ const OfferDetails = () => {
                     </Row>
 
                     <div style={priceRow}>
-                        <Row>
+                        <Row className="justify-content-md-center">
                             <Col style={{display: "flex", alignItems: "center", justifyContent: "left", paddingLeft: "30px"}}>
                                 <p>Gesamtpreis für <strong>1</strong> Person</p>
                             </Col>
@@ -71,22 +71,22 @@ const OfferDetails = () => {
                         </Row>
                     </div>
 
-                    <Row style={{margin: "10px"}}>
-                        <Col>
+                    <Row style={{margin: "10px"}} className="justify-content-md-center">
+                        <Col style={{backgroundColor: "blue"}}>
                             <p>Abfahrt:</p>
                         </Col>
-                        <Col>
+                        <Col style={{backgroundColor: "red"}}>
                             <Row>
                                 <p>13.00 Uhr</p>
                                 <p>Adresse</p>
                             </Row>
                         </Col>
                     </Row>
-                    <Row style={{margin: "15px"}}>
-                        <Col>
+                    <Row style={{margin: "15px"}} className="justify-content-md-center">
+                        <Col style={{backgroundColor: "red"}}>
                             <p>Ankunft:</p>
                         </Col>
-                        <Col>
+                        <Col style={{backgroundColor: "blue"}}>
                             <Row>
                                 <p>20.00 Uhr</p>
                                 <p>Adresse</p>
@@ -96,18 +96,19 @@ const OfferDetails = () => {
 
                     <hr style={{width: "70%", height: "5px", color: "#005B52"}}/>
 
-                    <Row style={{margin: "15px"}}>
-                        <Col>
+                    <Row style={{margin: "15px"}} className="justify-content-md-center">
+                        <Col style={{width: "70px", display: "flex", justifyContent: "left", backgroundColor: "blue"}}>
                             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBwzQrtQGEuLsPktS09w7j-GIl7Pcequ4XOr7ugcW2Akd5rRs38TKMOiv6qeo2Di_1pf8&usqp=CAU"
                                  alt="avatar"
                                  style={userImg}
                             />
                         </Col>
-                        <Col>
+                        <Col  style={{width: "50%", backgroundColor: "red"}}>
                             {/* {entry.userName} */}
                             <p>Selina</p>
                             {/* entry.feedback.length */}
                             <p>4.9 / 5.0 - 23 Bewertungen</p>
+                            <br/>
                             <p>
                                 Hey, ich fahre am 25.06.2022 wieder zurück in die Heimat und würde mich über 1-3
                                 MitfahrerInnen freuen. Also falls Interesse besteht und noch Fragen offen sind,
@@ -122,16 +123,18 @@ const OfferDetails = () => {
                                  alt="carImg"
                                  style={carImg}
                             />
-                            <h6>BMW 123d</h6>
+                            <h6>BMW</h6>
+                            <br/>
                             <p>Sitze: 3</p>
                         </Col>
-                        <Col>
+                        <Col style={{width: "25%", backgroundColor: "yellow"}}>
                             <Button>
                                 {/* Add Chat Icon */}
+                                <FontAwesomeIcon className="icon" icon="fa-solid fa-comment-lines" />
                             </Button>
                         </Col>
                     </Row>
-                </div>
+                </Container>
             </div>
         </div>
     )
