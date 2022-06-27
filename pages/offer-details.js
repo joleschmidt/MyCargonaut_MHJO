@@ -5,7 +5,9 @@ import styles from "../styles/Home.module.css";
 //components
 import Navbar from "../components/Navbar";
 import React from "react";
-import {Row, Col, Button} from "react-bootstrap";
+import {Container, Row, Col, Button} from "react-bootstrap";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import "@fortawesome/fontawesome-svg-core/styles.css";
 
 const OfferDetails = () => {
     //Styling

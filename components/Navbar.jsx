@@ -1,72 +1,55 @@
-import React from "react";
+import React, {useState} from "react";
+import {Image, Nav} from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {faUser} from "@fortawesome/free-solid-svg-icons";
+import SignInModal from "./SignInModal";
 
 const Navbar = () => {
-	//Funktionen
+	//functions
+	const [show, setShow] = useState(false);
+	const handleShow = () => setShow(true);
+
+	//css
+	let styles = {
+		nav: {
+			color: "#005B52",
+			backgroundColor: '#FFFFFF'
+		},
+		image: {
+			height: 50,
+			width: 130,
+		}
+	}
 
 	//HTML
 	return (
-		<nav className="navbar navbar-expand-lg bg-light">
-			<div className="container">
-				<a className="navbar-brand" href="/">
-					MyCargonaut
-				</a>
-				<button
-					className="navbar-toggler"
-					type="button"
-					data-bs-toggle="collapse"
-					data-bs-target="#navbarSupportedContent"
-					aria-controls="navbarSupportedContent"
-					aria-expanded="false"
-					aria-label="Toggle navigation"
-				>
-					<span className="navbar-toggler-icon" />
-				</button>
-				<div className="collapse navbar-collapse" id="navbarSupportedContent">
-					<ul className="navbar-nav me-auto mb-2 mb-lg-0">
-						<li>
-							<form className="d-flex" role="search">
-								<input
-									className="form-control me-2"
-									type="search"
-									placeholder="Search"
-									aria-label="Search"
-								/>
-								<button className="btn btn-outline-success" type="submit">
-									Search
-								</button>
-							</form>
-						</li>
-						<li>
-							<a className="nav-link" href="/fctemplate">
-								FC Template
-							</a>
-						</li>
-						<li>
-							<a className="nav-link" href="/search-results">
-								Search Results
-							</a>
-						</li>
-						<li>
-							<a className="nav-link" href="/offer-details">
-								Offer Details
-							</a>
-						</li>
-					</ul>
-					<div className="nav-item">
-						<a className="navbar-brand" aria-current="page" href="/profile">
-							<img
-								className="rounded-circle d-inline-block align-top"
-								src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200"
-								alt="avatar"
-								width="50"
-								height="50"
-							/>
-						</a>
-					</div>
-				</div>
+		<Nav style={styles.nav} className="navbar navbar-expand-lg">
+			<Image style={styles.image}
+				   className="navbar-brand"
+				   alt={'logo'}
+				   src={'/semi_androidMyCargonautmdpi.png'}/>
+
+			<div className="collapse navbar-collapse"
+				 id="navbarSupportedContent">
+				<ul className="navbar-nav mr-auto">
+					<li>
+						<a>Suche</a>
+					</li>
+					<li>
+						<a href={'search-results'}>Search Results</a>
+					</li>
+				</ul>
+				<FontAwesomeIcon className={'icon fa-2x'}
+								 icon={faUser}
+								 onClick={handleShow}
+								 style={{color: '#005B52', position: 'absolute', right: 15 + 'px'}}/>
 			</div>
-		</nav>
+			<SignInModal showModal={show} setShowModal={setShow} />
+		</Nav>
 	);
 };
 
+
 export default Navbar;
+
+
