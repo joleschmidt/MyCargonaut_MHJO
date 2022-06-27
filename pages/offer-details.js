@@ -1,16 +1,38 @@
-import Head from "next/head";
-import Image from "next/image";
-import styles from "../styles/Home.module.css";
-
 //components
 import Navbar from "../components/Navbar";
 import React from "react";
-import {Container, Row, Col, Button} from "react-bootstrap";
+import {Container, Row, Col} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import "@fortawesome/fontawesome-svg-core/styles.css";
+import {faHandsBubbles} from "@fortawesome/free-solid-svg-icons";
 
-const OfferDetails = () => {
+const OfferDetails = (props) => {
+
+    const offer = {
+        start: "Berlin",
+        destination: "Frankfurt",
+        price: "20",
+        passengers: 1,
+        startAddress: "Kaiserstraße 3",
+        destinationAddress: "Römer Gasse 144",
+        startTime: "10",
+        arrivalTime: "18",
+        offerUserId: "391h03",
+        offerUserName: "Valentin",
+        information: "Hey, würde mich freuen, wenn jemand mitkommen würde!",
+        car: "Audi",
+        seats: 3
+    };
+
+    const openChat = () => {
+        console.log('Open Chat.');
+    }
     //Styling
+    const container = {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+    }
     const pageBody = {
         width: "80%",
         display: "flex",
@@ -40,9 +62,14 @@ const OfferDetails = () => {
         height: "40px",
         borderRadius: "5px",
     }
+    const rideInfos = {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+    }
 
     return (
-        <div className="container">
+        <div className="container" style={{margin: "10px"}}>
             <Navbar />
             <div style={pageBody}>
                 <Container className="rideInfos">
@@ -74,10 +101,10 @@ const OfferDetails = () => {
                     </div>
 
                     <Row style={{margin: "10px"}} className="justify-content-md-center">
-                        <Col style={{backgroundColor: "blue"}}>
+                        <Col>
                             <p>Abfahrt:</p>
                         </Col>
-                        <Col style={{backgroundColor: "red"}}>
+                        <Col>
                             <Row>
                                 <p>13.00 Uhr</p>
                                 <p>Adresse</p>
@@ -85,10 +112,10 @@ const OfferDetails = () => {
                         </Col>
                     </Row>
                     <Row style={{margin: "15px"}} className="justify-content-md-center">
-                        <Col style={{backgroundColor: "red"}}>
+                        <Col>
                             <p>Ankunft:</p>
                         </Col>
-                        <Col style={{backgroundColor: "blue"}}>
+                        <Col>
                             <Row>
                                 <p>20.00 Uhr</p>
                                 <p>Adresse</p>
@@ -99,13 +126,13 @@ const OfferDetails = () => {
                     <hr style={{width: "70%", height: "5px", color: "#005B52"}}/>
 
                     <Row style={{margin: "15px"}} className="justify-content-md-center">
-                        <Col style={{width: "70px", display: "flex", justifyContent: "left", backgroundColor: "blue"}}>
+                        <Col className="col-3" style={{width: "30%", display: "flex", justifyContent: "left"}}>
                             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBwzQrtQGEuLsPktS09w7j-GIl7Pcequ4XOr7ugcW2Akd5rRs38TKMOiv6qeo2Di_1pf8&usqp=CAU"
                                  alt="avatar"
                                  style={userImg}
                             />
                         </Col>
-                        <Col  style={{width: "50%", backgroundColor: "red"}}>
+                        <Col className="col-7" style={{width: "50%"}}>
                             {/* {entry.userName} */}
                             <p>Selina</p>
                             {/* entry.feedback.length */}
@@ -129,15 +156,13 @@ const OfferDetails = () => {
                             <br/>
                             <p>Sitze: 3</p>
                         </Col>
-                        <Col style={{width: "25%", backgroundColor: "yellow"}}>
-                            <Button>
-                                {/* Add Chat Icon */}
-                                <FontAwesomeIcon className="icon" icon="fa-solid fa-comment-lines" />
-                            </Button>
+                        <Col className="col-2" style={{width: "20%", justifyContent: "flex-end"}}>
+                            <FontAwesomeIcon className="icon" icon={faHandsBubbles} onClick={() => openChat()}/>
                         </Col>
                     </Row>
                 </Container>
             </div>
+
         </div>
     )
 }

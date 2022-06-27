@@ -35,9 +35,6 @@ const Navbar = () => {
 					<li>
 						<a>Suche</a>
 					</li>
-					<li>
-						<a href={'search-results'}>Search Results</a>
-					</li>
 				</ul>
 				<FontAwesomeIcon className={'icon fa-2x'}
 								 icon={faUser}
