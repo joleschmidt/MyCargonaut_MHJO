@@ -4,7 +4,6 @@ import React from "react";
 import {Card, Row, Col} from "react-bootstrap";
 import Search from "../components/Search";
 import Footer from "../components/Footer";
-import Link from "next/link";
 import { useRouter } from "next/router";
 
 const SearchResults = (props) => {
@@ -120,39 +119,37 @@ const SearchResults = (props) => {
             {listResult.map(entry => {
                 return (
                     <div key={entry.id} style={resultsDiv} className="results">
-                        <Link href="/offer-details">
-                            <Card style={cardEntry} onClick={() => showDetails(entry)}>
-                                <Card.Body style={cardBody}>
-                                    <Row>
-                                        <Col className="col-2">
-                                            <img src={entry.photo}
-                                                 alt="avatar"
-                                                 style={userImg}/>
-                                        </Col>
-                                        <Col className="col-2" style={userNameTag}>
-                                            <p style={{margin: "10px", width: ""}}>{entry.name}</p>
-                                        </Col>
-                                        <Col className="col-3" style={colStyle}>
-                                            <Row>
-                                                <p>Abfahrt: {entry.startTime} Uhr</p>
-                                                <br/>
-                                                <p>Ankunft: {entry.arrivalTime} Uhr</p>
-                                            </Row>
-                                        </Col>
-                                        <Col className="col-3" style={colStyle}>
-                                            <Row>
-                                                <p>Auto: {entry.car}</p>
-                                                <br/>
-                                                <p>Sitze: {entry.passengers}</p>
-                                            </Row>
-                                        </Col>
-                                        <Col className="col-2" style={colStyle}>
-                                            <h3><strong>{entry.price}€</strong></h3>
-                                        </Col>
-                                    </Row>
-                                </Card.Body>
-                            </Card>
-                        </Link>
+                        <Card style={cardEntry} onClick={() => showDetails(entry)}>
+                            <Card.Body style={cardBody}>
+                                <Row>
+                                    <Col className="col-2">
+                                        <img src={entry.photo}
+                                             alt="avatar"
+                                             style={userImg}/>
+                                    </Col>
+                                    <Col className="col-2" style={userNameTag}>
+                                        <p style={{margin: "10px", width: ""}}>{entry.name}</p>
+                                    </Col>
+                                    <Col className="col-3" style={colStyle}>
+                                        <Row>
+                                            <p>Abfahrt: {entry.startTime} Uhr</p>
+                                            <br/>
+                                            <p>Ankunft: {entry.arrivalTime} Uhr</p>
+                                        </Row>
+                                    </Col>
+                                    <Col className="col-3" style={colStyle}>
+                                        <Row>
+                                            <p>Auto: {entry.car}</p>
+                                            <br/>
+                                            <p>Sitze: {entry.passengers}</p>
+                                        </Row>
+                                    </Col>
+                                    <Col className="col-2" style={colStyle}>
+                                        <h3><strong>{entry.price}€</strong></h3>
+                                    </Col>
+                                </Row>
+                            </Card.Body>
+                        </Card>
 
                     </div>
                 )
