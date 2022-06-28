@@ -7,8 +7,7 @@ import Footer from "../components/Footer";
 import { useRouter } from "next/router";
 import {useEffect, useState} from "react";
 
-const SearchResults = (props) => {
-    // const searchResults = props.state;
+const SearchResults = () => {
     const router = useRouter();
     const [result, setResult] = useState([]);
 
@@ -66,10 +65,10 @@ const SearchResults = (props) => {
         },
     ];
 
-    const showDetails = (data) => {
+    const showDetails = (dataId) => {
         router.push({
             pathname: "/offer-details/",
-            // query: {id: data.id},
+            // query: {id: dataId},
             query: {id: '2ZzUiWPMKSbAsjFHKS53'},
         }).catch((err) => consoleError(err));
     }
@@ -130,7 +129,7 @@ const SearchResults = (props) => {
             {listResult.map(entry => {
                 return (
                     <div key={entry.id} style={resultsDiv} className="results">
-                        <Card style={cardEntry} onClick={() => showDetails(entry)}>
+                        <Card style={cardEntry} onClick={() => showDetails(entry.id)}>
                             <Card.Body style={cardBody}>
                                 <Row>
                                     <Col className="col-2">
