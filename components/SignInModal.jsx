@@ -1,50 +1,95 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import React, { useState } from "react";
-import { Modal, Button } from "react-bootstrap";
+import router, { useRouter } from "next/router";
+import { Modal, Button, Alert } from "react-bootstrap";
+import { auth } from "../firebase";
+
+// auth
 
 const SignInModal = (props) => {
+	//auth
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+	const [checkPassword, setCheckPassword] = useState("");
+	const [error, setError] = useState(null);
+	const [success, setSuccess] = useState(false);
+
+	//modal
 	const { showModal, setShowModal } = props;
+	const [showSignUp, setShowSignUp] = useState(false);
+
 	const handleClose = () => {
 		setShowModal(false);
 		setError(false);
 		setSuccess(false);
 	};
-	const [showSignUp, setShowSignUp] = useState(false);
 
-	//auth
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
-	const [checkPassword, setCheckPassword] = useState("");
-	const [error, setError] = useState(false);
-	const [success, setSuccess] = useState(false);
-
-	const handleSignIn = () => {
-		if (password === "" || email === "") {
-			setError(true);
-			setSuccess(false);
-		} else {
-			setEmail("");
-			setPassword("");
-			setCheckPassword("");
-			setError(false);
-			setSuccess(true);
+	const validatePassword = () => {
+		let isValid = true;
+		if (password !== "" && checkPassword !== "") {
+			if (password !== checkPassword) {
+				isValid = false;
+				setError("Passwords does not match");
+			}
 		}
+		return isValid;
 	};
 
-	const handleSignUp = () => {
-		if (password !== checkPassword || password === "" || email === "") {
-			setError(true);
-			setSuccess(false);
-		} else {
-			setEmail("");
-			setPassword("");
-			setCheckPassword("");
-			setError(false);
-			setSuccess(true);
+	const handleSignIn = (event) => {
+		event.preventDefault();
+		if (validatePassword()) {
+			auth
+				.signInWithEmailAndPassword(email, password)
+				.then((res) => {
+					setSuccess(true);
+					setError(false);
+					setShowModal(false);
+					router.push("/profile");
+				})
+				.catch((error) => {
+					setError(error.message);
+					setSuccess(false);
+				});
 		}
+		setEmail("");
+		setPassword("");
+		setCheckPassword("");
 	};
 
+	const handleSignUp = (event) => {
+		event.preventDefault();
+		setError("");
+		if (validatePassword()) {
+			// Create a new user with email and password using firebase
+			auth
+				.createUserWithEmailAndPassword(email, password)
+				.then((res) => {
+					setSuccess(true);
+					setError(false);
+					setShowModal(false);
+					router.push("/profile");
+				})
+				.catch((err) => setError(err.message));
+		}
+		setEmail("");
+		setPassword("");
+		setCheckPassword("");
+	};
+
+	/* 	const signUpWithGoogle = () => {
+		auth
+			.signInWithPopup(new auth.GoogleAuthProvider())
+			.then((res) => {
+				setSuccess(true);	
+				setError(false);
+				setShowModal(false);
+				router.push("/profile");
+			}
+		)
+			.catch((err) => setError(err.message));
+	}
+ */
 	return (
 		<div>
 			<Modal
@@ -60,6 +105,7 @@ const SignInModal = (props) => {
 					</Modal.Title>
 				</Modal.Header>
 				<Modal.Body style={styles.modalCenter}>
+					{}
 					<form>
 						<input
 							type="email"
@@ -102,7 +148,7 @@ const SignInModal = (props) => {
 							<Button
 								variant="primary"
 								style={styles.signInBtn}
-								onClick={() => handleSignUp()}
+								onClick={handleSignUp}
 							>
 								Registrieren
 							</Button>
@@ -110,11 +156,12 @@ const SignInModal = (props) => {
 							<Button
 								variant="primary"
 								style={styles.signInBtn}
-								onClick={() => handleSignIn()}
+								onClick={handleSignIn}
 							>
 								Anmelden
 							</Button>
 						)}
+						{error && <Alert color="danger">{error}</Alert>}
 
 						{showSignUp == false ? (
 							<div style={styles.aReg}>
