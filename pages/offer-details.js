@@ -2,8 +2,6 @@
 import Navbar from "../components/Navbar";
 import React from "react";
 import {Row, Col} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import "@fortawesome/fontawesome-svg-core/styles.css";
 import Footer from "../components/Footer";
 import firebase from "../firebase";
 import {useState} from "react";
@@ -15,7 +13,7 @@ import {BsFillChatTextFill} from "react-icons/bs";
 const OfferDetails = () => {
     const router = useRouter();
     const offerId = router.query.id;
-    console.log('URL userId: ', offerId);
+    console.log('URL offerId: ', offerId);
 
     const [result, setResult] = useState(0);
 
