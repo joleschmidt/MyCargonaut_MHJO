@@ -10,6 +10,7 @@ import {useState} from "react";
 import Button from "react-bootstrap/Button";
 import {useRouter} from "next/router";
 import {useEffect} from "react";
+import {BsFillChatTextFill} from "react-icons/bs";
 
 const OfferDetails = () => {
     const router = useRouter();
@@ -100,9 +101,8 @@ const OfferDetails = () => {
         backgroundColor: "#005B52",
     }
     const chatIcon = {
-        width: "30px",
-        height: "30px",
-        fill: "#005B52",
+        fontSize: "25px",
+        color: "#005B52",
         marginLeft: "60px",
     }
 
@@ -235,9 +235,7 @@ const OfferDetails = () => {
                     </Col>
                         {/*Chat Icon*/}
                     <Col className="align-content-center">
-                        <img src="/chatbubble.svg" onClick={() => openChat()}
-                             alt="chatIcon"
-                             style={chatIcon}/>
+                        <p style={chatIcon} onClick={() => openChat()}><BsFillChatTextFill/></p>
                     </Col>
                 </Row>
             </div>
