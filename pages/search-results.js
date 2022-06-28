@@ -9,12 +9,13 @@ import {useEffect, useState} from "react";
 
 const SearchResults = () => {
     const router = useRouter();
-    const [result, setResult] = useState([]);
+    const [result, setResult] = useState({});
+    const searchData = router.query;
 
     //triggers when site is mount
     useEffect(() => {
-        console.log(router.query);
-        setResult(router.query.searchResults);
+        console.log(searchData);
+        setResult(searchData);
         console.log(result);
     }, []);
 
@@ -68,9 +69,9 @@ const SearchResults = () => {
     const showDetails = (dataId) => {
         router.push({
             pathname: "/offer-details/",
-            // query: {id: dataId},
-            query: {id: '2ZzUiWPMKSbAsjFHKS53'},
-        }).catch((err) => consoleError(err));
+            query: {id: dataId},
+            // query: {id: '2ZzUiWPMKSbAsjFHKS53'},
+        }).catch((err) => console.log(err));
     }
 
     //Styling

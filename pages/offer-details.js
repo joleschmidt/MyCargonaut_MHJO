@@ -15,7 +15,7 @@ const OfferDetails = () => {
     const offerId = router.query.id;
     console.log('URL offerId: ', offerId);
 
-    const [result, setResult] = useState(0);
+    const [result, setResult] = useState([]);
 
     //triggers when site is mount
     useEffect(() => {
@@ -30,8 +30,9 @@ const OfferDetails = () => {
             .doc(offerId)
             .get()
             .then((snapshot) => {
-                setResult(snapshot.data());
-            }).catch((err) => consoleError(err));
+                const data = snapshot.data();
+                setResult(data);
+            }).catch((err) => console.log(err));
         console.log('Result: ', result);
     };
 
