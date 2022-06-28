@@ -5,11 +5,19 @@ import {Card, Row, Col} from "react-bootstrap";
 import Search from "../components/Search";
 import Footer from "../components/Footer";
 import { useRouter } from "next/router";
+import {useEffect, useState} from "react";
 
 const SearchResults = (props) => {
     // const searchResults = props.state;
-
     const router = useRouter();
+    const [result, setResult] = useState([]);
+
+    //triggers when site is mount
+    useEffect(() => {
+        console.log(router.query);
+        setResult(router.query.searchResults);
+        console.log(result);
+    }, []);
 
     let listResult = [
         {
@@ -61,8 +69,9 @@ const SearchResults = (props) => {
     const showDetails = (data) => {
         router.push({
             pathname: "/offer-details/",
-            query: {id: data.id},
-        }).catch((err) => console.log('Error: ', err));
+            // query: {id: data.id},
+            query: {id: '2ZzUiWPMKSbAsjFHKS53'},
+        }).catch((err) => consoleError(err));
     }
 
     //Styling
@@ -108,6 +117,8 @@ const SearchResults = (props) => {
         paddingRight: "0",
         paddingLeft: "0",
     }
+
+    // HTML
     return (
         <main>
             <Navbar/>

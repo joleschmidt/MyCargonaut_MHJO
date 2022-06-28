@@ -5,17 +5,21 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
 import firebase from '../firebase';
 import DatePicker from "react-datepicker";
-// import {useNavigate} from "react-router";
+import { useRouter } from "next/router";
 
 // import required css from library
 import "react-datepicker/dist/react-datepicker.css";
 
 const Search = (props) => {
-    // const navigate = useNavigate();
-    //
-    // const navigateSearchResults = () => {
-    //     navigate('/search-results', {state: result});
-    // }
+    const router = useRouter();
+
+    const showSearchResults = (data) => {
+        router.push({
+            pathname: "/search-results/",
+            query: {searchResults: data},
+        }).catch((err) => consoleError('Error: ', err));
+    }
+
     //Values of input-fields
     const [start, setStart] = useState('');
     const [destination, setDestination] = useState('');
@@ -47,6 +51,7 @@ const Search = (props) => {
                     }));
                     setResult(result);
                     console.log(result);
+                    showSearchResults(result);
                 });
         } else {
             firebase.firestore()
@@ -61,6 +66,7 @@ const Search = (props) => {
                     }));
                     setResult(result);
                     console.log(result);
+                    showSearchResults(result);
                 });
         }
     }

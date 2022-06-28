@@ -9,6 +9,7 @@ import firebase from "../firebase";
 import {useState} from "react";
 import Button from "react-bootstrap/Button";
 import {useRouter} from "next/router";
+import {useEffect} from "react";
 
 const OfferDetails = () => {
     const router = useRouter();
@@ -16,35 +17,44 @@ const OfferDetails = () => {
     console.log('URL userId: ', offerId);
 
     const [result, setResult] = useState(0);
-    const getFromFirestore = () => {
+
+    //triggers when site is mount
+    useEffect(() => {
+        getOfferFromFirestore();
+    }, []);
+
+    // Get single offer to display details
+    const getOfferFromFirestore = (offerId) => {
         firebase
             .firestore()
             .collection("rides")
-            .where('id', '==', offerId)
-            .orderBy("nr", "desc")
-            .onSnapshot((snapshot) => {
-                const result = snapshot.docs.map((doc) => ({
-                    id: doc.id,
-                    ...doc.data(),
-                }));
-                setResult(result);
-            });
+            .doc(offerId)
+            .get()
+            .then((snapshot) => {
+                setResult(snapshot.data());
+            }).catch((err) => consoleError(err));
+        console.log('Result: ', result);
     };
+
+    const openChat = () => {
+        console.log('Open Chat with User: ', user.id);
+    }
 
     const offer = {
         id: "d30i1",
-        startCity: "Berlin",
-        destination: "Frankfurt",
+        startride: "Berlin",
+        endride: "Frankfurt",
         price: "30",
         startAddress: "Kaiserstraße 3",
         destinationAddress: "Römer Gasse 144",
         startTime: "10",
         arrivalTime: "21",
         offerUserId: "39hw3",
-        description: "Ich fahre zurück in die Heimat. Da mein Freund leider verhindert ist, fahre ist diesmal leider aleine. Falls du auch in die Richtung muss, nehme ich gerne bis zu 3 Personen mit." +
+        date: "30.06.2022",
+        text: "Ich fahre zurück in die Heimat. Da mein Freund leider verhindert ist, fahre ist diesmal leider aleine. Falls du auch in die Richtung muss, nehme ich gerne bis zu 3 Personen mit." +
             "Da ich Einiges mitnehmen muss, ist der Kofferraum schon recht voll. Bitte nur Handgepäck mitnehmen. Wenn noch Fragen sind, schreib mir einfach!",
         car: "BMW",
-        seats: 3
+        passenger: 3
     };
     const user = {
         id: "39hw3",
@@ -55,9 +65,6 @@ const OfferDetails = () => {
         feedbackAvg: "4,7",
     }
 
-    const openChat = () => {
-        console.log('Open Chat.');
-    }
     //Styling
     const priceRow = {
         width: "70%",
@@ -87,12 +94,19 @@ const OfferDetails = () => {
         objectFit: "cover",
         borderRadius: "5px",
     }
-    const bookBtn = {
+    const bookingBtn = {
         width: "60%",
         borderRadius: "15px",
         backgroundColor: "#005B52",
     }
+    const chatIcon = {
+        width: "30px",
+        height: "30px",
+        fill: "#005B52",
+        marginLeft: "60px",
+    }
 
+    // HTML
     return (
         <main>
             <Navbar />
@@ -101,7 +115,7 @@ const OfferDetails = () => {
                 <Row className="justify-content-md-center" style={{marginTop: "10px", marginRight: "15px"}}>
                     {/*Start City*/}
                     <Col className="text-end" style={{paddingTop: "10px"}}>
-                        <h2>{offer.startCity}</h2>
+                        <h2>{offer.startride}</h2>
                     </Col>
                     {/*Arrow Img*/}
                     <Col style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
@@ -111,7 +125,7 @@ const OfferDetails = () => {
                     </Col>
                     {/*Destination City*/}
                     <Col style={{paddingTop: "10px"}}>
-                        <h2>{offer.destination}</h2>
+                        <h2>{offer.endride}</h2>
                     </Col>
                 </Row>
                 {/*Offer Price*/}
@@ -120,7 +134,7 @@ const OfferDetails = () => {
                         <Row>
                             {/*Offer for 1 Person*/}
                             <Col className="text-center" style={{paddingTop: "13px"}}>
-                                <p>Gesamtpreis für <strong>1</strong> Person</p>
+                                <p>Gesamtpreis für <strong> 1 </strong> Person</p>
                             </Col>
                             {/*Offer Price*/}
                             <Col className="text-center" style={{paddingTop: "10px"}}>
@@ -137,6 +151,9 @@ const OfferDetails = () => {
                         </Row>
                     </Col>
                     <Col className="col-8" style={{paddingLeft: "40px"}}>
+                        <Row>
+                            <p>{offer.date}</p>
+                        </Row>
                         <Row>
                             <p>{offer.startTime} Uhr</p>
                         </Row>
@@ -187,7 +204,7 @@ const OfferDetails = () => {
                         </Row>
                         {/*Description*/}
                         <Row>
-                            <p>{offer.description}</p>
+                            <p>{offer.text}</p>
                         </Row>
                         <Row className="justify-content-md-center" style={offerRow}>
                             <hr style={{color: "#005B52"}}/>
@@ -206,19 +223,21 @@ const OfferDetails = () => {
                                 <Row>
                                     <h5><strong>{offer.car}</strong></h5>
                                     <br/>
-                                    <p>Sitze: {offer.seats}</p>
+                                    <p>Sitze: {offer.passenger}</p>
                                 </Row>
                             </Col>
                         </Row>
                         <Row className="justify-content-md-center" style={{marginTop: "40px", marginBottom: "40px"}}>
-                            <Button style={bookBtn}>
+                            <Button style={bookingBtn}>
                                 Fahrt buchen
                             </Button>
                         </Row>
                     </Col>
-                    {/*Chat Icon*/}
-                    <Col>
-
+                        {/*Chat Icon*/}
+                    <Col className="align-content-center">
+                        <img src="/chatbubble.svg" onClick={() => openChat()}
+                             alt="chatIcon"
+                             style={chatIcon}/>
                     </Col>
                 </Row>
             </div>
