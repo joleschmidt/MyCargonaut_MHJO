@@ -1,44 +1,64 @@
 //components
 import Navbar from "../components/Navbar";
 import React from "react";
-import {Container, Row, Col} from "react-bootstrap";
+import {Row, Col} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import "@fortawesome/fontawesome-svg-core/styles.css";
-import {faHandsBubbles} from "@fortawesome/free-solid-svg-icons";
+import Footer from "../components/Footer";
+import firebase from "../firebase";
+import {useState} from "react";
+import Button from "react-bootstrap/Button";
+import {useRouter} from "next/router";
 
-const OfferDetails = (props) => {
+const OfferDetails = () => {
+    const router = useRouter();
+    const offerId = router.query.id;
+    console.log('URL userId: ', offerId);
+
+    const [result, setResult] = useState(0);
+    const getFromFirestore = () => {
+        firebase
+            .firestore()
+            .collection("rides")
+            .where('id', '==', offerId)
+            .orderBy("nr", "desc")
+            .onSnapshot((snapshot) => {
+                const result = snapshot.docs.map((doc) => ({
+                    id: doc.id,
+                    ...doc.data(),
+                }));
+                setResult(result);
+            });
+    };
 
     const offer = {
-        start: "Berlin",
+        id: "d30i1",
+        startCity: "Berlin",
         destination: "Frankfurt",
-        price: "20",
-        passengers: 1,
+        price: "30",
         startAddress: "Kaiserstraße 3",
         destinationAddress: "Römer Gasse 144",
         startTime: "10",
-        arrivalTime: "18",
-        offerUserId: "391h03",
-        offerUserName: "Valentin",
-        information: "Hey, würde mich freuen, wenn jemand mitkommen würde!",
-        car: "Audi",
+        arrivalTime: "21",
+        offerUserId: "39hw3",
+        description: "Ich fahre zurück in die Heimat. Da mein Freund leider verhindert ist, fahre ist diesmal leider aleine. Falls du auch in die Richtung muss, nehme ich gerne bis zu 3 Personen mit." +
+            "Da ich Einiges mitnehmen muss, ist der Kofferraum schon recht voll. Bitte nur Handgepäck mitnehmen. Wenn noch Fragen sind, schreib mir einfach!",
+        car: "BMW",
         seats: 3
     };
+    const user = {
+        id: "39hw3",
+        firstName: "Lili",
+        lastName: "Schmitt",
+        age: "26",
+        feedbackCount: "19",
+        feedbackAvg: "4,7",
+    }
 
     const openChat = () => {
         console.log('Open Chat.');
     }
     //Styling
-    const container = {
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-    }
-    const pageBody = {
-        width: "80%",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-    }
     const priceRow = {
         width: "70%",
         backgroundColor: "#005B52",
@@ -48,122 +68,162 @@ const OfferDetails = (props) => {
         padding: "10px",
         margin: "10px",
     }
+    const offerRow = {
+        marginTop: "10px",
+    }
     const arrowImg = {
         width: "30%",
         height: "30%",
     }
     const userImg = {
-        width: "60px",
-        height: "60px",
+        width: "80px",
+        height: "80px",
         borderRadius: "15px",
+        objectFit: "cover",
     }
     const carImg = {
-        width: "40px",
-        height: "40px",
+        width: "70px",
+        height: "70px",
+        objectFit: "cover",
         borderRadius: "5px",
     }
-    const rideInfos = {
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
+    const bookBtn = {
+        width: "60%",
+        borderRadius: "15px",
+        backgroundColor: "#005B52",
     }
 
     return (
-        <div className="container" style={{margin: "10px"}}>
+        <main>
             <Navbar />
-            <div style={pageBody}>
-                <Container className="rideInfos">
-                    <Row style={{margin: "10px"}} className="justify-content-md-center">
-                        <Col>
-                            {/* Start City */}
-                            <h2>Berlin</h2>
-                        </Col>
-                        <Col>
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Arrow_east.svg/800px-Arrow_east.svg.png?20071208091123"
-                                 alt="arrow"
-                                 style={arrowImg}/>
-                        </Col>
-                        <Col>
-                            {/* Destination City */}
-                            <h2>Köln</h2>
-                        </Col>
-                    </Row>
-
+            <div className="justify-content-md-center" style={{marginBottom: "20px"}}>
+                {/*Drive Start City & Destination*/}
+                <Row className="justify-content-md-center" style={{marginTop: "10px", marginRight: "15px"}}>
+                    {/*Start City*/}
+                    <Col className="text-end" style={{paddingTop: "10px"}}>
+                        <h2>{offer.startCity}</h2>
+                    </Col>
+                    {/*Arrow Img*/}
+                    <Col style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Arrow_east.svg/800px-Arrow_east.svg.png?20071208091123"
+                             alt="arrow"
+                             style={arrowImg}/>
+                    </Col>
+                    {/*Destination City*/}
+                    <Col style={{paddingTop: "10px"}}>
+                        <h2>{offer.destination}</h2>
+                    </Col>
+                </Row>
+                {/*Offer Price*/}
+                <Row className="justify-content-md-center" style={offerRow}>
                     <div style={priceRow}>
-                        <Row className="justify-content-md-center">
-                            <Col style={{display: "flex", alignItems: "center", justifyContent: "left", paddingLeft: "30px"}}>
+                        <Row>
+                            {/*Offer for 1 Person*/}
+                            <Col className="text-center" style={{paddingTop: "13px"}}>
                                 <p>Gesamtpreis für <strong>1</strong> Person</p>
                             </Col>
-                            <Col style={{display: "flex", alignItems: "center", justifyContent: "right", paddingRight: "30px"}}>
-                                <h2>25,00€</h2>
+                            {/*Offer Price*/}
+                            <Col className="text-center" style={{paddingTop: "10px"}}>
+                                <h2><strong>{offer.price},00€</strong></h2>
                             </Col>
                         </Row>
                     </div>
+                </Row>
+                {/* Start Ride Time & Address*/}
+                <Row className="justify-content-md-center" style={offerRow}>
+                    <Col className="col-4" style={{textAlign: "end"}}>
+                        <Row>
+                            <p>Abfahrt</p>
+                        </Row>
+                    </Col>
+                    <Col className="col-8" style={{paddingLeft: "40px"}}>
+                        <Row>
+                            <p>{offer.startTime} Uhr</p>
+                        </Row>
+                        <Row>
+                            <p>{offer.startAddress}</p>
+                        </Row>
+                    </Col>
+                </Row>
+                {/* Destination Ride Time & Address*/}
+                <Row className="justify-content-md-center" style={offerRow}>
+                    <Col className="col-4" style={{textAlign: "end"}}>
+                        <Row>
+                            <p>Anfahrt</p>
+                        </Row>
+                    </Col>
+                    <Col className="col-8" style={{paddingLeft: "40px"}}>
+                        <Row>
+                            <p>{offer.arrivalTime} Uhr</p>
+                        </Row>
+                        <Row>
+                            <p>{offer.destinationAddress}</p>
+                        </Row>
+                    </Col>
+                </Row>
 
-                    <Row style={{margin: "10px"}} className="justify-content-md-center">
-                        <Col>
-                            <p>Abfahrt:</p>
-                        </Col>
-                        <Col>
-                            <Row>
-                                <p>13.00 Uhr</p>
-                                <p>Adresse</p>
-                            </Row>
-                        </Col>
-                    </Row>
-                    <Row style={{margin: "15px"}} className="justify-content-md-center">
-                        <Col>
-                            <p>Ankunft:</p>
-                        </Col>
-                        <Col>
-                            <Row>
-                                <p>20.00 Uhr</p>
-                                <p>Adresse</p>
-                            </Row>
-                        </Col>
-                    </Row>
+                <Row className="justify-content-md-center" style={offerRow}>
+                    <hr style={{width: "60%", height: "5px", color: "#005B52"}}/>
+                </Row>
 
-                    <hr style={{width: "70%", height: "5px", color: "#005B52"}}/>
-
-                    <Row style={{margin: "15px"}} className="justify-content-md-center">
-                        <Col className="col-3" style={{width: "30%", display: "flex", justifyContent: "left"}}>
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBwzQrtQGEuLsPktS09w7j-GIl7Pcequ4XOr7ugcW2Akd5rRs38TKMOiv6qeo2Di_1pf8&usqp=CAU"
-                                 alt="avatar"
-                                 style={userImg}
-                            />
-                        </Col>
-                        <Col className="col-7" style={{width: "50%"}}>
-                            {/* {entry.userName} */}
-                            <p>Selina</p>
-                            {/* entry.feedback.length */}
-                            <p>4.9 / 5.0 - 23 Bewertungen</p>
-                            <br/>
-                            <p>
-                                Hey, ich fahre am 25.06.2022 wieder zurück in die Heimat und würde mich über 1-3
-                                MitfahrerInnen freuen. Also falls Interesse besteht und noch Fragen offen sind,
-                                einfach anschreiben!
-                                Fahre einen BMW 1er und würde euch bitten nur Handgepäck mitzunehmen.
-                                LG Selina
-                            </p>
-
+                <Row className="justify-content-md-center" style={offerRow}>
+                    {/*User Photo*/}
+                    <Col style={{width: "30%", display: "flex", justifyContent: "right"}}>
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBwzQrtQGEuLsPktS09w7j-GIl7Pcequ4XOr7ugcW2Akd5rRs38TKMOiv6qeo2Di_1pf8&usqp=CAU"
+                             alt="avatar"
+                             style={userImg}
+                        />
+                    </Col>
+                    {/*User Name, Feedback, Description, Car, Seats*/}
+                    <Col style={{paddingLeft: "40px"}}>
+                        {/*User Name*/}
+                        <Row>
+                            <h4 style={{color: "#005B52"}}><strong>{user.firstName}</strong></h4>
+                        </Row>
+                        {/*Feedback*/}
+                        <Row>
+                            {/*Feedback Average*/}
+                            <p>{user.feedbackAvg} / 5.0 - {user.feedbackCount} Bewertungen</p>
+                        </Row>
+                        {/*Description*/}
+                        <Row>
+                            <p>{offer.description}</p>
+                        </Row>
+                        <Row className="justify-content-md-center" style={offerRow}>
                             <hr style={{color: "#005B52"}}/>
+                        </Row>
+                        {/*Car*/}
+                        <Row style={{marginTop: "10px"}}>
+                            {/*Car Photo*/}
+                            <Col className="col-4">
+                                <img src="https://images.prismic.io/shacarlacca/NjQwNGM3MzYtZGMwNy00ZjE1LTljMzYtNGRkYTVkNWIwMzcz__10.jpg?auto=compress%2Cformat&rect=0%2C0%2C1600%2C900&w=1200&h=1200"
+                                     alt="carImg"
+                                     style={carImg}
+                                />
+                            </Col>
+                            {/*Car Name & Seats*/}
+                            <Col className="col-8" style={{textAlign: "start", marginLeft: "10px", width: "50%"}}>
+                                <Row>
+                                    <h5><strong>{offer.car}</strong></h5>
+                                    <br/>
+                                    <p>Sitze: {offer.seats}</p>
+                                </Row>
+                            </Col>
+                        </Row>
+                        <Row className="justify-content-md-center" style={{marginTop: "40px", marginBottom: "40px"}}>
+                            <Button style={bookBtn}>
+                                Fahrt buchen
+                            </Button>
+                        </Row>
+                    </Col>
+                    {/*Chat Icon*/}
+                    <Col>
 
-                            <img src="https://images.prismic.io/shacarlacca/NjQwNGM3MzYtZGMwNy00ZjE1LTljMzYtNGRkYTVkNWIwMzcz__10.jpg?auto=compress%2Cformat&rect=0%2C0%2C1600%2C900&w=1200&h=1200"
-                                 alt="carImg"
-                                 style={carImg}
-                            />
-                            <h6>BMW</h6>
-                            <br/>
-                            <p>Sitze: 3</p>
-                        </Col>
-                        <Col className="col-2" style={{width: "20%", justifyContent: "flex-end"}}>
-                            <FontAwesomeIcon className="icon" icon={faHandsBubbles} onClick={() => openChat()}/>
-                        </Col>
-                    </Row>
-                </Container>
+                    </Col>
+                </Row>
             </div>
-
-        </div>
+            <Footer />
+        </main>
     )
 }
 
