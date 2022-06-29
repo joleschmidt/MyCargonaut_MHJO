@@ -11,6 +11,7 @@ import Button from "react-bootstrap/Button";
 import firebase from "../firebase";
 import Footer from "../components/Footer";
 import "react-datepicker/dist/react-datepicker.css";
+import SuccessModal from "../components/SuccessModal";
 
 const Shipping = () => {
 	//Funktionen
@@ -22,6 +23,8 @@ const Shipping = () => {
 	const [shippingWeight, setShippingWeight] = useState("");
 	const [priceShipping, setPriceShipping] = useState("");
 	const [dateShipping, setDateShipping] = useState("");
+	const [show, setShow] = useState(false);
+	const handleShow = () => setShow(true);
 
 	const addShippingToFirestore = () => {
 		firebase.firestore().collection("shippings").add({
@@ -34,14 +37,23 @@ const Shipping = () => {
 			date: dateShipping.toString(),
 			car: cartype,
 		});
-		console.log("add shippings to firestore");
+	};
+	const handleClick = () => {
+		setStartShipping('');
+		setEndShipping('');
+		setSpeditionstype('default');
+		setShippingSize('');
+		setShippingWeight('');
+		setPriceShipping('');
+		setDateShipping('');
+		setCartype('default');
 	};
 
 	//HTML
 	return (
 		<div>
 			<Navbar />
-			<main className="container" style={{ marginBottom: "90px" }}>
+			<main>
 				<div className="container">
 					<div className="input-position mt-5">
 						<div className="d-flex flex-column justify-content-center">
@@ -101,7 +113,7 @@ const Shipping = () => {
 									/>
 									<input
 										type="text"
-										className="form-control input-styles space-left mb-3"
+										className="form-control input-styles mb-3"
 										placeholder="max. Gewicht"
 										id="shippingWeight"
 										value={shippingWeight}
@@ -122,7 +134,7 @@ const Shipping = () => {
 										onChange={selectedDate => setDateShipping(selectedDate)}
 										dateFormat={'dd.MM.yyyy'}
 										minDate={new Date()}
-										className={'datePicker'}
+										className={'datepickerAdd input-styles'}
 										placeholderText={'Wann?'}
 									/>
 								</div>
@@ -143,7 +155,7 @@ const Shipping = () => {
 							<div className="d-flex justify-content-center">
 								<Button
 									className="btn-style mt-4 mb-4"
-									onClick={() => addShippingToFirestore()}
+									onClick={function (event){ addShippingToFirestore(); handleClick(); handleShow()}}
 								>
 									veröffentlichen
 								</Button>
@@ -159,9 +171,11 @@ const Shipping = () => {
 						</div>
 					</div>
 				</div>
+				<SuccessModal showModal={show} setShowModal={setShow} />
 			</main>
-
-			<Footer />
+			<div style={{position: "absolute", left: 0, right: 0, bottom:0}}>
+				<Footer />
+			</div>
 		</div>
 	);
 };
