@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import Image from "next/image";
 
@@ -9,12 +9,45 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ReviewModal from "../components/ReviewModal";
 import { Button } from "react-bootstrap";
 import Footer from "../components/Footer";
+import { auth } from "../firebase";
+import firebase from "../firebase";
 
 const Profil = () => {
 	//Funktionen
 
 	const [showReview, setShowReview] = useState(false);
 	const handleShowReview = () => setShowReview(true);
+
+	const [user, setUser] = useState({
+		first: "",
+		last: "",
+		age: "",
+		image: "",
+		email: "",
+	});
+
+	useEffect(() => {
+		getCurrentUser();
+	}, []);
+
+	//get current snapshot user from firestore and set user state
+	const getCurrentUser = async () => {
+		await firebase
+			.firestore()
+			.collection("users")
+			.doc(auth.currentUser.uid)
+			.get()
+			.then((doc) => {
+				setUser({
+					first: doc.data().first,
+					last: doc.data().last,
+					age: doc.data().age,
+					image: doc.data().image,
+					email: doc.data().email,
+				});
+			});
+	};
+
 	//HTML
 	return (
 		<div className="m-0">
@@ -24,8 +57,8 @@ const Profil = () => {
 				<div className="container flex-column" style={styles.profileInfo}>
 					<div className="row justify-content-center m-3">
 						<img
-							className="rounded-circle  col-sm-auto"
-							src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200"
+							className="rounded-circle "
+							src={user.image}
 							alt="Profilbild"
 							width="300"
 							height="300"
@@ -33,7 +66,9 @@ const Profil = () => {
 						/>
 					</div>
 					<div className="d-flex flex-row justify-content-center align-items-center">
-						<h2 style={styles.name}>Hans Peter</h2>
+						<h2 style={styles.name}>
+							{user.first} {user.last}
+						</h2>
 						<a href="/paymentProcess">
 							<FontAwesomeIcon
 								className="icon"
@@ -42,13 +77,13 @@ const Profil = () => {
 							/>
 						</a>
 					</div>
-					<h3 style={styles.age}>43 Jahre</h3>
+					<h3 style={styles.age}>{user.age} Jahre</h3>
 					<hr style={styles.border} />
 					<div
 						style={styles.about}
 						className="d-flex flex-column align-items-center"
 					>
-						<p style={styles.aboutTitle}>Über Hans</p>
+						<p style={styles.aboutTitle}>Über {user.first}</p>
 						<p style={styles.aboutText} className="text-center">
 							Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
 							nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
@@ -115,6 +150,7 @@ const Profil = () => {
 				showReviewModal={showReview}
 				setReviewModal={setShowReview}
 			/>
+			<div></div>
 			<Footer />
 		</div>
 	);
@@ -188,7 +224,6 @@ let styles = {
 		fontSize: "32px",
 		fontWeight: "bold",
 	},
-	profileImg: {},
 	profileInfo: {
 		justifyContent: "center",
 		alignItems: "center",

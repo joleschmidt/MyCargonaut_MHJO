@@ -1,31 +1,66 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Image, Nav } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { faRightFromBracket, faUser } from "@fortawesome/free-solid-svg-icons";
 import SignInModal from "./SignInModal";
+import firebase, { auth } from "../firebase";
+import router, { useRouter } from "next/router";
 
 const Navbar = () => {
 	//functions
 	const [show, setShow] = useState(false);
+	const [error, setError] = useState(null);
+	const [loggedIn, setLoggedIn] = useState(false);
 	const handleShow = () => setShow(true);
+	const [user, setUser] = useState({
+		first: "",
+		last: "",
+		age: "",
+		image: "",
+		email: "",
+	});
 
-	//css
-	let styles = {
-		nav: {
-			color: "#005B52",
-			backgroundColor: "#FFFFFF",
-		},
-		image: {
-			height: 50,
-			width: 130,
-			marginLeft: "15px",
-		},
-		link: {
-			cursor: "default",
-			textDecoration: "none",
-			color: "#005B52",
-			marginLeft: "15px",
-		},
+	useEffect(() => {
+		checkIfLoggedIn();
+		if (loggedIn === true) {
+			getCurrentUser();
+		}
+		return;
+	}, [loggedIn]);
+
+	//get current snapshot user from firestore and set user state
+	const getCurrentUser = async () => {
+		await firebase
+			.firestore()
+			.collection("users")
+			.doc(auth.currentUser.uid)
+			.get()
+			.then((doc) => {
+				setUser({
+					first: doc.data().first,
+					last: doc.data().last,
+					age: doc.data().age,
+					image: doc.data().image,
+					email: doc.data().email,
+				});
+			});
+	};
+	const handleLogout = () => {
+		auth
+			.signOut()
+			.then(() => {
+				router.push("/");
+			})
+			.catch((err) => setError(err.message));
+	};
+
+	const checkIfLoggedIn = () => {
+		if (auth.currentUser) {
+			setLoggedIn(true);
+		} else {
+			setLoggedIn(false);
+			router.push("/");
+		}
 	};
 
 	//HTML
@@ -50,37 +85,63 @@ const Navbar = () => {
 						</a>
 					</li>
 				</ul>
-				<ul className="navbar-nav">
-					<li className="nav-item">
-						<FontAwesomeIcon
-							className={"icon fa-2x"}
-							icon={faUser}
-							onClick={handleShow}
-							style={{
-								color: "#005B52",
-								position: "absolute",
-								right: "100px",
-							}}
-						/>
-					</li>
-					<li className="nav-item">
-						<a href="/profile">
-							<img
-								className="rounded-circle d-inline-block align-top"
-								src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200"
-								alt="avatar"
-								width="50"
-								height="50"
-								style={{
-									color: "#005B52",
-									position: "absolute",
-									right: "15px",
-									top: "25px",
-								}}
-							/>
-						</a>
-					</li>
-				</ul>
+				{loggedIn !== true ? (
+					<ul className="navbar-nav">
+						<li className="nav-item">
+							{/* 
+							anker tag that calls the handleLogout function 
+							<a href="#" onClick={handleLogout}>
+
+							*/}
+							<a href="#">
+								<FontAwesomeIcon
+									className={"icon fa-2x"}
+									icon={faUser}
+									onClick={handleShow}
+									style={{
+										color: "#005B52",
+										position: "absolute",
+										right: "100px",
+									}}
+								/>
+							</a>
+						</li>
+					</ul>
+				) : (
+					<ul className="navbar-nav">
+						<li className="nav-item">
+							<a href="#">
+								<FontAwesomeIcon
+									className={"icon fa-2x"}
+									icon={faRightFromBracket}
+									onClick={handleLogout}
+									style={{
+										color: "#005B52",
+										position: "absolute",
+										right: "100px",
+									}}
+								/>
+							</a>
+						</li>
+						<li className="nav-item">
+							<a href="/profile">
+								<img
+									className="rounded-circle d-inline-block align-top"
+									src={user.image}
+									alt="avatar"
+									width="50"
+									height="50"
+									style={{
+										color: "#005B52",
+										position: "absolute",
+										right: "15px",
+										top: "25px",
+									}}
+								/>
+							</a>
+						</li>
+					</ul>
+				)}
 			</div>
 			<SignInModal showModal={show} setShowModal={setShow} />
 		</Nav>
@@ -88,3 +149,22 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+//css
+let styles = {
+	nav: {
+		color: "#005B52",
+		backgroundColor: "#FFFFFF",
+	},
+	image: {
+		height: 50,
+		width: 130,
+		marginLeft: "15px",
+	},
+	link: {
+		cursor: "default",
+		textDecoration: "none",
+		color: "#005B52",
+		marginLeft: "15px",
+	},
+};

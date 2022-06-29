@@ -5,10 +5,20 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import '@fortawesome/fontawesome-svg-core/styles.css'
 
-import React from "react";
+// auth
+import { AuthProvider } from "../context/AuthContext";
+
+
+import React, { useState } from "react";
 
 function MyApp({ Component, pageProps }) {
-	return <Component {...pageProps} />;
+	  const [currentUser, setCurrentUser] = useState(null);
+
+  return (
+		<AuthProvider value={{ currentUser }}>
+			<Component {...pageProps} />
+		</AuthProvider>
+	);
 }
 
 export default MyApp;
