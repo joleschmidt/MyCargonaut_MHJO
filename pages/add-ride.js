@@ -24,7 +24,6 @@ const Ride = () => {
 	const handleShow = () => setShow(true);
 
 	const addRideToFirestore = () => {
-		if(startRide == "")
 		firebase.firestore().collection("rides").add({
 			startride: startRide,
 			endride: endRide,

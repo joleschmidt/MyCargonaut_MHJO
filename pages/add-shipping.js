@@ -27,8 +27,6 @@ const Shipping = () => {
 	const handleShow = () => setShow(true);
 
 	const addShippingToFirestore = () => {
-			setError(false);
-			setSuccess(true);
 		firebase.firestore().collection("shippings").add({
 			start: startShipping,
 			end: endShipping,
