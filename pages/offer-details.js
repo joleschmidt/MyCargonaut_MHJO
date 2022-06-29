@@ -1,13 +1,11 @@
 //components
 import Navbar from "../components/Navbar";
-import React from "react";
-import {Row, Col} from "react-bootstrap";
+import React, {useEffect, useState} from "react";
+import {Col, Row} from "react-bootstrap";
 import Footer from "../components/Footer";
 import firebase from "../firebase";
-import {useState} from "react";
 import Button from "react-bootstrap/Button";
 import {useRouter} from "next/router";
-import {useEffect} from "react";
 import {BsFillChatTextFill} from "react-icons/bs";
 
 const OfferDetails = () => {
@@ -16,6 +14,7 @@ const OfferDetails = () => {
     console.log('URL offerId: ', offerId);
 
     const [result, setResult] = useState([]);
+    let rideOffer = {};
 
     //triggers when site is mount
     useEffect(() => {
@@ -30,10 +29,9 @@ const OfferDetails = () => {
             .doc(offerId)
             .get()
             .then((snapshot) => {
-                const data = snapshot.data();
-                setResult(data);
+                rideOffer = snapshot.data();
             }).catch((err) => console.log(err));
-        console.log('Result: ', result);
+        console.log('Result: ', rideOffer);
     };
 
     const openChat = () => {

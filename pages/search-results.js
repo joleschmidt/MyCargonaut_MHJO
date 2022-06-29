@@ -69,8 +69,8 @@ const SearchResults = () => {
     const showDetails = (dataId) => {
         router.push({
             pathname: "/offer-details/",
-            query: {id: dataId},
-            // query: {id: '2ZzUiWPMKSbAsjFHKS53'},
+            // query: {id: dataId},
+            query: {id: '2ZzUiWPMKSbAsjFHKS53'},
         }).catch((err) => console.log(err));
     }
 
