@@ -31,11 +31,14 @@ const OfferDetails = () => {
                 .firestore()
                 .collection("rides")
                 .doc(offerId)
-                .get()
-                .then((snapshot) => {
-                    rideOffer = snapshot.data();
-                    setResult(rideOffer);
-                }).catch((err) => console.log(err));
+                .onSnapshot((snapshot) => {
+                    const result = snapshot.docs.map((doc) => ({
+                        id: doc.id,
+                        ...doc.data(),
+                    }));
+                    setResult(result);
+                    console.log(result);
+                });
             console.log('Result: ', rideOffer);
         } else {
             firebase

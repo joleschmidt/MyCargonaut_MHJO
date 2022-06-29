@@ -10,7 +10,7 @@ import {useEffect, useState} from "react";
 const SearchResults = () => {
     const router = useRouter();
     const [result, setResult] = useState({});
-    let queryType = router.query.searchType;
+    const queryType = router.query.searchType;
 
     const searchData = router.query;
 
