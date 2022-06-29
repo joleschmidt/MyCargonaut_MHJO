@@ -1,3 +1,4 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { Button } from "react-bootstrap";
@@ -11,6 +12,7 @@ const FcTemplate = () => {
 	const [user, setUser] = useState([]);
 	const [firstName, setFirstName] = useState("");
 	const [lastName, setLastName] = useState("");
+	const [zahl, setZahl] = useState(1);
 
 	//functions
 	const handleIncrease = () => {
@@ -151,6 +153,15 @@ const FcTemplate = () => {
 						value={lastName}
 						onChange={(e) => setLastName(e.target.value)}
 					/>
+					<select
+						className="form-control mt-5 mb-5"
+						onChange={(input) => console.log(input)}
+					>
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+					</select>
+
 					<Button
 						className="btn-primary mt-2"
 						onClick={() => addUserToFirestore()}

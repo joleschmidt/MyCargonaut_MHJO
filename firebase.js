@@ -14,5 +14,6 @@ if (!firebase.apps.length) {
 		measurementId: "G-KP2E3B09TS",
 	});
 }
+
 // firebase.analytics();
 export default firebase;
