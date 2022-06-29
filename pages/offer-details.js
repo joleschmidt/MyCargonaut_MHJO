@@ -12,26 +12,45 @@ const OfferDetails = () => {
     const router = useRouter();
     const offerId = router.query.id;
     console.log('URL offerId: ', offerId);
+    const offerType = router.query.offerType;
+    console.log('URL offerType: ', offerType);
 
     const [result, setResult] = useState([]);
     let rideOffer = {};
 
     //triggers when site is mount
     useEffect(() => {
-        getOfferFromFirestore();
+        getOfferFromFirestore(offerId);
+        getUserFromFireStore();
     }, []);
 
     // Get single offer to display details
     const getOfferFromFirestore = (offerId) => {
-        firebase
-            .firestore()
-            .collection("rides")
-            .doc(offerId)
-            .get()
-            .then((snapshot) => {
-                rideOffer = snapshot.data();
-            }).catch((err) => console.log(err));
-        console.log('Result: ', rideOffer);
+        if(offerType === true){
+            firebase
+                .firestore()
+                .collection("rides")
+                .doc(offerId)
+                .get()
+                .then((snapshot) => {
+                    rideOffer = snapshot.data();
+                    setResult(rideOffer);
+                }).catch((err) => console.log(err));
+            console.log('Result: ', rideOffer);
+        } else {
+            firebase
+                .firestore()
+                .collection("shippings")
+                .doc(offerId)
+                .get()
+                .then((snapshot) => {
+                    rideOffer = snapshot.data();
+                    setResult(rideOffer);
+                }).catch((err) => console.log(err));
+            console.log('Result: ', rideOffer);
+        }
+    };
+    const getUserFromFireStore = () => {
     };
 
     const openChat = () => {
@@ -105,139 +124,132 @@ const OfferDetails = () => {
 
     // HTML
     return (
-        <main>
+        <div>
             <Navbar />
-            <div className="justify-content-md-center" style={{marginBottom: "20px"}}>
-                {/*Drive Start City & Destination*/}
-                <Row className="justify-content-md-center" style={{marginTop: "10px", marginRight: "15px"}}>
-                    {/*Start City*/}
-                    <Col className="text-end" style={{paddingTop: "10px"}}>
-                        <h2>{offer.startride}</h2>
-                    </Col>
-                    {/*Arrow Img*/}
-                    <Col style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Arrow_east.svg/800px-Arrow_east.svg.png?20071208091123"
-                             alt="arrow"
-                             style={arrowImg}/>
-                    </Col>
-                    {/*Destination City*/}
-                    <Col style={{paddingTop: "10px"}}>
-                        <h2>{offer.endride}</h2>
-                    </Col>
-                </Row>
-                {/*Offer Price*/}
-                <Row className="justify-content-md-center" style={offerRow}>
-                    <div style={priceRow}>
-                        <Row>
-                            {/*Offer for 1 Person*/}
-                            <Col className="text-center" style={{paddingTop: "13px"}}>
-                                <p>Gesamtpreis für <strong> 1 </strong> Person</p>
-                            </Col>
-                            {/*Offer Price*/}
-                            <Col className="text-center" style={{paddingTop: "10px"}}>
-                                <h2><strong>{offer.price},00€</strong></h2>
-                            </Col>
-                        </Row>
-                    </div>
-                </Row>
-                {/* Start Ride Time & Address*/}
-                <Row className="justify-content-md-center" style={offerRow}>
-                    <Col className="col-4" style={{textAlign: "end"}}>
-                        <Row>
-                            <p>Abfahrt</p>
-                        </Row>
-                    </Col>
-                    <Col className="col-8" style={{paddingLeft: "40px"}}>
-                        <Row>
-                            <p>{offer.date}</p>
-                        </Row>
-                        <Row>
-                            <p>{offer.startTime} Uhr</p>
-                        </Row>
-                        <Row>
-                            <p>{offer.startAddress}</p>
-                        </Row>
-                    </Col>
-                </Row>
-                {/* Destination Ride Time & Address*/}
-                <Row className="justify-content-md-center" style={offerRow}>
-                    <Col className="col-4" style={{textAlign: "end"}}>
-                        <Row>
-                            <p>Anfahrt</p>
-                        </Row>
-                    </Col>
-                    <Col className="col-8" style={{paddingLeft: "40px"}}>
-                        <Row>
-                            <p>{offer.arrivalTime} Uhr</p>
-                        </Row>
-                        <Row>
-                            <p>{offer.destinationAddress}</p>
-                        </Row>
-                    </Col>
-                </Row>
+            <main>
+                <div className="justify-content-md-center" style={{marginBottom: "20px"}}>
+                    {/*Drive Start City & Destination*/}
+                    <Row className="justify-content-md-center" style={{marginTop: "10px", marginRight: "15px"}}>
+                        {/*/!*Start City*!/*/}
+                        {/*<Col className="text-end" style={{paddingTop: "10px"}}>*/}
+                        {/*    <h2>{offer.startride}</h2>*/}
+                        {/*</Col>*/}
+                        {/*/!*Arrow Img*!/*/}
+                        {/*<Col style={{display: "flex", alignItems: "center", justifyContent: "center"}}>*/}
+                        {/*    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Arrow_east.svg/800px-Arrow_east.svg.png?20071208091123"*/}
+                        {/*         alt="arrow"*/}
+                        {/*         style={arrowImg}/>*/}
+                        {/*</Col>*/}
+                        {/*/!*Destination City*!/*/}
+                        {/*<Col style={{paddingTop: "10px"}}>*/}
+                        {/*    <h2>{offer.endride}</h2>*/}
+                        {/*</Col>*/}
+                    </Row>
+                    {/*Offer Price*/}
+                    <Row className="justify-content-md-center" style={offerRow}>
+                        <div style={priceRow}>
+                            <Row>
+                                {/*Offer for 1 Person*/}
+                                <Col className="text-center" style={{paddingTop: "13px"}}>
+                                    <p>Gesamtpreis für <strong> 1 </strong> Person</p>
+                                </Col>
+                                {/*Offer Price*/}
+                                <Col className="text-center" style={{paddingTop: "10px"}}>
+                                    <h2><strong>{offer.price},00€</strong></h2>
+                                </Col>
+                            </Row>
+                        </div>
+                    </Row>
+                    {/* Start Ride Time & Address*/}
+                    <Row className="justify-content-md-center" style={offerRow}>
+                        <Col className="col-4" style={{textAlign: "end"}}>
+                            <Row>
+                                <p><strong>Start</strong></p>
+                            </Row>
+                        </Col>
+                        <Col className="col-8" style={{paddingLeft: "40px"}}>
+                            <Row>
+                                <p>{offer.startride}</p>
+                            </Row>
+                        </Col>
+                    </Row>
+                    {/* Destination Ride Time & Address*/}
+                    <Row className="justify-content-md-center" style={offerRow}>
+                        <Col className="col-4" style={{textAlign: "end"}}>
+                            <Row>
+                                <p><strong>Ziel</strong></p>
+                            </Row>
+                        </Col>
+                        <Col className="col-8" style={{paddingLeft: "40px"}}>
+                            <Row>
+                                <p>{offer.endride}</p>
+                            </Row>
+                        </Col>
+                    </Row>
 
-                <Row className="justify-content-md-center" style={offerRow}>
-                    <hr style={{width: "60%", height: "5px", color: "#005B52"}}/>
-                </Row>
+                    <Row className="justify-content-md-center" style={offerRow}>
+                        <hr style={{width: "60%", height: "5px", color: "#005B52"}}/>
+                    </Row>
 
-                <Row className="justify-content-md-center" style={offerRow}>
-                    {/*User Photo*/}
-                    <Col style={{width: "30%", display: "flex", justifyContent: "right"}}>
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBwzQrtQGEuLsPktS09w7j-GIl7Pcequ4XOr7ugcW2Akd5rRs38TKMOiv6qeo2Di_1pf8&usqp=CAU"
-                             alt="avatar"
-                             style={userImg}
-                        />
-                    </Col>
-                    {/*User Name, Feedback, Description, Car, Seats*/}
-                    <Col style={{paddingLeft: "40px"}}>
-                        {/*User Name*/}
-                        <Row>
-                            <h4 style={{color: "#005B52"}}><strong>{user.firstName}</strong></h4>
-                        </Row>
-                        {/*Feedback*/}
-                        <Row>
-                            {/*Feedback Average*/}
-                            <p>{user.feedbackAvg} / 5.0 - {user.feedbackCount} Bewertungen</p>
-                        </Row>
-                        {/*Description*/}
-                        <Row>
-                            <p>{offer.text}</p>
-                        </Row>
-                        <Row className="justify-content-md-center" style={offerRow}>
-                            <hr style={{color: "#005B52"}}/>
-                        </Row>
-                        {/*Car*/}
-                        <Row style={{marginTop: "10px"}}>
-                            {/*Car Photo*/}
-                            <Col className="col-4">
-                                <img src="https://images.prismic.io/shacarlacca/NjQwNGM3MzYtZGMwNy00ZjE1LTljMzYtNGRkYTVkNWIwMzcz__10.jpg?auto=compress%2Cformat&rect=0%2C0%2C1600%2C900&w=1200&h=1200"
-                                     alt="carImg"
-                                     style={carImg}
-                                />
-                            </Col>
-                            {/*Car Name & Seats*/}
-                            <Col className="col-8" style={{textAlign: "start", marginLeft: "10px", width: "50%"}}>
-                                <Row>
-                                    <h5><strong>{offer.car}</strong></h5>
-                                    <br/>
-                                    <p>Sitze: {offer.passenger}</p>
-                                </Row>
-                            </Col>
-                        </Row>
-                        <Row className="justify-content-md-center" style={{marginTop: "40px", marginBottom: "40px"}}>
-                            <Button style={bookingBtn}>
-                                Fahrt buchen
-                            </Button>
-                        </Row>
-                    </Col>
+                    <Row className="justify-content-md-center" style={offerRow}>
+                        {/*User Photo*/}
+                        <Col style={{width: "30%", display: "flex", justifyContent: "right"}}>
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBwzQrtQGEuLsPktS09w7j-GIl7Pcequ4XOr7ugcW2Akd5rRs38TKMOiv6qeo2Di_1pf8&usqp=CAU"
+                                 alt="avatar"
+                                 style={userImg}
+                            />
+                        </Col>
+                        {/*User Name, Feedback, Description, Car, Seats*/}
+                        <Col style={{paddingLeft: "40px"}}>
+                            {/*User Name*/}
+                            <Row>
+                                <h4 style={{color: "#005B52"}}><strong>{user.firstName}</strong></h4>
+                            </Row>
+                            {/*Feedback*/}
+                            <Row>
+                                {/*Feedback Average*/}
+                                <p>{user.feedbackAvg} / 5.0 - {user.feedbackCount} Bewertungen</p>
+                            </Row>
+                            {/*Description*/}
+                            <Row>
+                                <p>{offer.text}</p>
+                            </Row>
+                            <Row className="justify-content-md-center" style={offerRow}>
+                                <hr style={{color: "#005B52"}}/>
+                            </Row>
+                            {/*Car*/}
+                            <Row style={{marginTop: "10px"}}>
+                                {/*Car Photo*/}
+                                <Col className="col-4">
+                                    <img src="https://images.prismic.io/shacarlacca/NjQwNGM3MzYtZGMwNy00ZjE1LTljMzYtNGRkYTVkNWIwMzcz__10.jpg?auto=compress%2Cformat&rect=0%2C0%2C1600%2C900&w=1200&h=1200"
+                                         alt="carImg"
+                                         style={carImg}
+                                    />
+                                </Col>
+                                {/*Car Name & Seats*/}
+                                <Col className="col-8" style={{textAlign: "start", marginLeft: "10px", width: "50%"}}>
+                                    <Row>
+                                        <h5><strong>{offer.car}</strong></h5>
+                                        <br/>
+                                        <p>Sitze: {offer.passenger}</p>
+                                    </Row>
+                                </Col>
+                            </Row>
+                            <Row className="justify-content-md-center" style={{marginTop: "40px", marginBottom: "40px"}}>
+                                <Button style={bookingBtn}>
+                                    Fahrt buchen
+                                </Button>
+                            </Row>
+                        </Col>
                         {/*Chat Icon*/}
-                    <Col className="align-content-center">
-                        <p style={chatIcon} onClick={() => openChat()}><BsFillChatTextFill/></p>
-                    </Col>
-                </Row>
-            </div>
+                        <Col className="align-content-center">
+                            <p style={chatIcon} onClick={() => openChat()}><BsFillChatTextFill/></p>
+                        </Col>
+                    </Row>
+                </div>
+            </main>
             <Footer />
-        </main>
+        </div>
     )
 }
 

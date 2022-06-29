@@ -8,7 +8,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 //bootstrap
 import Button from "react-bootstrap/Button";
-import {BrowserRouter as Router } from 'react-router-dom';
 //components
 import Navbar from "../components/Navbar";
 import Search from "../components/Search";

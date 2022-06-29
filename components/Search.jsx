@@ -16,7 +16,9 @@ const Search = (props) => {
     const showSearchResults = (data) => {
         router.push({
             pathname: "/search-results/",
-            query: {searchResults: data},
+            query: {
+                searchType: searchDrive,
+            },
         }).catch((err) => consoleError('Error: ', err));
     }
 
