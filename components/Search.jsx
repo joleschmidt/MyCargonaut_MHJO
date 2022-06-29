@@ -17,6 +17,7 @@ const Search = () => {
     const [goods, setGoods] = useState('');
     const [passengers, setPassengers] = useState(0);
     const [date, setDate] = useState('');
+    console.log(date);
 
     //value and functions for conditional rendering
     const [searchDrive, setSearchDrive] = useState(false);
@@ -35,6 +36,7 @@ const Search = () => {
                 .where('startride', '==', start)
                 .where('endride', '==', destination)
                 .where('passenger', '==', passengers)
+                .where('date', '==', date.toString())
                 .onSnapshot((snapshot) => {
                     const result = snapshot.docs.map((doc) => ({
                         id: doc.id,
@@ -49,6 +51,7 @@ const Search = () => {
                 .where('start', '==', start)
                 .where('end', '==', destination)
                 .where('typeSpedition', '==', goods)
+                .where('date', '==', date.toString())
                 .onSnapshot((snapshot) => {
                     const result = snapshot.docs.map((doc) => ({
                         id: doc.id,
