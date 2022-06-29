@@ -3,7 +3,7 @@ import { Image, Nav } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRightFromBracket, faUser } from "@fortawesome/free-solid-svg-icons";
 import SignInModal from "./SignInModal";
-import { auth } from "../firebase";
+import firebase, { auth } from "../firebase";
 import router, { useRouter } from "next/router";
 
 const Navbar = () => {
@@ -12,11 +12,39 @@ const Navbar = () => {
 	const [error, setError] = useState(null);
 	const [loggedIn, setLoggedIn] = useState(false);
 	const handleShow = () => setShow(true);
+	const [user, setUser] = useState({
+		first: "",
+		last: "",
+		age: "",
+		image: "",
+		email: "",
+	});
 
 	useEffect(() => {
 		checkIfLoggedIn();
-	}, []);
+		if (loggedIn === true) {
+			getCurrentUser();
+		}
+		return;
+	}, [loggedIn]);
 
+	//get current snapshot user from firestore and set user state
+	const getCurrentUser = async () => {
+		await firebase
+			.firestore()
+			.collection("users")
+			.doc(auth.currentUser.uid)
+			.get()
+			.then((doc) => {
+				setUser({
+					first: doc.data().first,
+					last: doc.data().last,
+					age: doc.data().age,
+					image: doc.data().image,
+					email: doc.data().email,
+				});
+			});
+	};
 	const handleLogout = () => {
 		auth
 			.signOut()
@@ -31,6 +59,7 @@ const Navbar = () => {
 			setLoggedIn(true);
 		} else {
 			setLoggedIn(false);
+			router.push("/");
 		}
 	};
 
@@ -98,7 +127,7 @@ const Navbar = () => {
 							<a href="/profile">
 								<img
 									className="rounded-circle d-inline-block align-top"
-									src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200"
+									src={user.image}
 									alt="avatar"
 									width="50"
 									height="50"
