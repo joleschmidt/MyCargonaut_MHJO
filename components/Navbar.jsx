@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Image, Nav } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRightFromBracket, faUser } from "@fortawesome/free-solid-svg-icons";
 import SignInModal from "./SignInModal";
 import firebase, { auth } from "../firebase";
 import router, { useRouter } from "next/router";
+import { AuthContext } from "../context/AuthContext";
 
 const Navbar = () => {
 	//functions
@@ -12,39 +13,13 @@ const Navbar = () => {
 	const [error, setError] = useState(null);
 	const [loggedIn, setLoggedIn] = useState(false);
 	const handleShow = () => setShow(true);
-	const [user, setUser] = useState({
-		first: "",
-		last: "",
-		age: "",
-		image: "",
-		email: "",
-	});
+
+	const { user } = useContext(AuthContext);
 
 	useEffect(() => {
 		checkIfLoggedIn();
-		if (loggedIn === true) {
-			getCurrentUser();
-		}
-		return;
-	}, [loggedIn]);
+	}, []);
 
-	//get current snapshot user from firestore and set user state
-	const getCurrentUser = async () => {
-		await firebase
-			.firestore()
-			.collection("users")
-			.doc(auth.currentUser.uid)
-			.get()
-			.then((doc) => {
-				setUser({
-					first: doc.data().first,
-					last: doc.data().last,
-					age: doc.data().age,
-					image: doc.data().image,
-					email: doc.data().email,
-				});
-			});
-	};
 	const handleLogout = () => {
 		auth
 			.signOut()
@@ -55,7 +30,7 @@ const Navbar = () => {
 	};
 
 	const checkIfLoggedIn = () => {
-		if (auth.currentUser) {
+		if (user) {
 			setLoggedIn(true);
 		} else {
 			setLoggedIn(false);
@@ -114,7 +89,7 @@ const Navbar = () => {
 								<FontAwesomeIcon
 									className={"icon fa-2x"}
 									icon={faRightFromBracket}
-									onClick={handleLogout}
+									onClick={() => handleLogout()}
 									style={{
 										color: "#005B52",
 										position: "absolute",

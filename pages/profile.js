@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Head from "next/head";
 import Image from "next/image";
 
@@ -9,44 +9,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ReviewModal from "../components/ReviewModal";
 import { Button } from "react-bootstrap";
 import Footer from "../components/Footer";
-import { auth } from "../firebase";
-import firebase from "../firebase";
+import { AuthContext } from "../context/AuthContext";
 
 const Profil = () => {
 	//Funktionen
-
 	const [showReview, setShowReview] = useState(false);
 	const handleShowReview = () => setShowReview(true);
-
-	const [user, setUser] = useState({
-		first: "",
-		last: "",
-		age: "",
-		image: "",
-		email: "",
-	});
-
-	useEffect(() => {
-		getCurrentUser();
-	}, []);
-
-	//get current snapshot user from firestore and set user state
-	const getCurrentUser = async () => {
-		await firebase
-			.firestore()
-			.collection("users")
-			.doc(auth.currentUser.uid)
-			.get()
-			.then((doc) => {
-				setUser({
-					first: doc.data().first,
-					last: doc.data().last,
-					age: doc.data().age,
-					image: doc.data().image,
-					email: doc.data().email,
-				});
-			});
-	};
+	const { user } = useContext(AuthContext);
 
 	//HTML
 	return (

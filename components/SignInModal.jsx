@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import router, { useRouter } from "next/router";
 import { Modal, Button, Alert } from "react-bootstrap";
 import firebase, { auth } from "../firebase";
@@ -30,6 +30,13 @@ const SignInModal = (props) => {
 		setSuccess(false);
 	};
 
+	//timer for 2 seconds
+	const timer = () => {
+		setTimeout(() => {
+			router.push("/profile");
+		}, 2000);
+	};
+
 	const validatePassword = () => {
 		let isValid = true;
 		if (password !== "" && checkPassword !== "") {
@@ -41,8 +48,7 @@ const SignInModal = (props) => {
 		return isValid;
 	};
 
-	const handleSignIn = (event) => {
-		event.preventDefault();
+	const handleSignIn = () => {
 		if (validatePassword()) {
 			auth
 				.signInWithEmailAndPassword(email, password)
@@ -50,7 +56,7 @@ const SignInModal = (props) => {
 					setSuccess(true);
 					setError(false);
 					setShowModal(false);
-					router.push("/profile");
+					//timer();
 				})
 				.catch((error) => {
 					setError(error.message);
@@ -95,7 +101,7 @@ const SignInModal = (props) => {
 						console.log(url);
 						setIsLoading(false);
 						setIsUploaded(true);
-						router.push("/profile");
+						timer();
 					})
 					.catch((err) => {
 						console.log(err);
@@ -105,8 +111,7 @@ const SignInModal = (props) => {
 
 	//sign up
 
-	const handleSignUp = (event) => {
-		event.preventDefault();
+	const handleSignUp = () => {
 		setError("");
 		if (image == null) {
 			setError("Please upload an image");
@@ -119,7 +124,6 @@ const SignInModal = (props) => {
 					setSuccess(true);
 					setError(false);
 					setShowModal(false);
-					router.push("/profile");
 				})
 				.catch((err) => setError(err.message));
 		}
