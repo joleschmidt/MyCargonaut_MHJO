@@ -14,7 +14,7 @@ import { Card } from "react-bootstrap";
 const PaymentProcess1 = () => {
   const router = useRouter();
   const [user, setUser] = useState([]);
-  const [rides, setRide] = useState([]);
+  const [drive, setDrive] = useState([]);
 
   useEffect(() => {
     getUserFromFirestore();
@@ -37,13 +37,13 @@ const PaymentProcess1 = () => {
   const getRideFromFirestore = () => {
     firebase
       .firestore()
-      .collection("rides")
+      .collection("drive")
       .onSnapshot((snapshot) => {
-        const rides = snapshot.docs.map((doc) => ({
+        const drive = snapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
         }));
-        setRide(rides);
+        setDrive(drive);
       });
   };
 
@@ -100,15 +100,15 @@ const PaymentProcess1 = () => {
                   </div>
                 ))}
 
-                {rides.map((rides) => (
-                  <div key={rides.id}>
+                {drive.map((drive) => (
+                  <div key={drive.id}>
                     <Row className={styles.inputPaymentFour}>
                       <Col>
                         <Card.Text>Gesamtpreis</Card.Text>
                       </Col>
 
                       <Col md={{ span: 4 }}>
-                        <Card.Text>{rides.price} €</Card.Text>
+                        <Card.Text>{drive.price} €</Card.Text>
                       </Col>
                     </Row>
 

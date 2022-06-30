@@ -13,7 +13,7 @@ import { Card } from "react-bootstrap";
 
 const PaymentProcess = () => {
   const router = useRouter();
-  const [rides, setRide] = useState([]);
+  const [drive, setDrive] = useState([]);
 
   useEffect(() => {
     getRideFromFirestore();
@@ -22,13 +22,13 @@ const PaymentProcess = () => {
   const getRideFromFirestore = () => {
     firebase
       .firestore()
-      .collection("rides")
+      .collection("drive")
       .onSnapshot((snapshot) => {
-        const rides = snapshot.docs.map((doc) => ({
+        const drive = snapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
         }));
-        setRide(rides);
+        setDrive(drive);
       });
   };
 
@@ -53,19 +53,19 @@ const PaymentProcess = () => {
         </Row>
 
         <div>
-          {rides.map((rides) => (
-            <div key={rides.id}>
+          {drive.map((drive) => (
+            <div key={drive.id}>
               <Row>
                 <Col md={{ span: 8, offset: 2 }}>
                   <Card>
                     <Card.Body>
                       <Row className={styles.inputPaymentTwo}>
                         <Col>
-                          <Card.Title>{rides.startride}</Card.Title>
+                          <Card.Title>{drive.startride}</Card.Title>
                         </Col>
                         <Col></Col>
                         <Col>
-                          <Card.Title>{rides.endride}</Card.Title>
+                          <Card.Title>{drive.endride}</Card.Title>
                         </Col>
                       </Row>
 
@@ -74,7 +74,7 @@ const PaymentProcess = () => {
                           <Card.Text>Abfahrt:</Card.Text>
                         </Col>
                         <Col>
-                          <Card.Text>13:00 Uhr</Card.Text>
+                          <Card.Text>{drive.starttime} Uhr</Card.Text>
                         </Col>
                         <Col></Col>
                         <Col></Col>
@@ -85,14 +85,14 @@ const PaymentProcess = () => {
                           <Card.Text>Ankunft:</Card.Text>
                         </Col>
                         <Col>
-                          <Card.Text>20:00 Uhr</Card.Text>
+                          <Card.Text>{drive.endtime} Uhr</Card.Text>
                         </Col>
                         <Col>
                           <Card.Text>Mitfahrer:</Card.Text>
                         </Col>
 
                         <Col>
-                          <Card.Text>{rides.passenger}</Card.Text>
+                          <Card.Text>{drive.passenger}</Card.Text>
                         </Col>
                       </Row>
                       <Row className={styles.inputPaymentFour}>
@@ -101,7 +101,7 @@ const PaymentProcess = () => {
                         </Col>
 
                         <Col md={{ span: 4 }}>
-                          <Card.Text>{rides.price} €</Card.Text>
+                          <Card.Text>{drive.price} €</Card.Text>
                         </Col>
                       </Row>
                       <Row className="justify-content-md-center">
