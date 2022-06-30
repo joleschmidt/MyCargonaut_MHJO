@@ -118,11 +118,6 @@
 /*************************
 ********payment pages*****
 **************************
-colors
-inputfelder: #A3C4C1
-buttons: #005B52
-mittelgrün: #669D97
-
 */
 .head {
   padding-top: 2%;
@@ -131,10 +126,21 @@ mittelgrün: #669D97
 
 .btn {
   background-color: #005B52;
+  border-color: #005B52;
   font-weight: bold;
   width: 450px;
   height: 45px;
   border-radius: 10px;   
+}
+.btn:hover{
+  background-color: #669D97;
+  border-color: #669D97;
+  box-shadow: none;
+}
+.btn:focus{
+  background-color:  #005B52;
+  border-color: #005B52;
+  box-shadow: none;
 }
 
 .inputPaymentOne {
@@ -205,7 +211,7 @@ mittelgrün: #669D97
 .guthaben {
   color: #005B52;
   font-size: 64px;
-  margin-left: 35%;
+  margin-left: 42%;
   margin-top: 5%;
   margin-bottom: 10%;
 }
@@ -213,19 +219,27 @@ mittelgrün: #669D97
 .imgPaymentTree {
   margin-left: 40%;
 }
+.imgPaymentCar {
+  margin-left: 30%;
+}
 
 .modalPayment {
   color:#005B52;
 }
 
 .headFont {
-  margin-left: 20%;
+  margin-left: 10%;
   color: #005B52;
   font-size: 50px;
   margin-top: 5%;
   margin-bottom: 10%;
   
 }
+.paymentCard{
+  margin-bottom: 2%;
+}
+
+
 
 /*************************
 *******trackDrive pages***
@@ -233,4 +247,8 @@ mittelgrün: #669D97
 
 .cardTracking {
   margin-top: 5%;
+}
+
+.test {
+  color: black;
 }

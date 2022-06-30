@@ -13,11 +13,9 @@ import { auth } from "../firebase";
 import firebase from "../firebase";
 
 const Profil = () => {
-	//Funktionen
-
 	const [showReview, setShowReview] = useState(false);
 	const handleShowReview = () => setShowReview(true);
-
+	const [reviews, setReviews] = useState([]);
 	const [user, setUser] = useState({
 		first: "",
 		last: "",
@@ -28,7 +26,10 @@ const Profil = () => {
 
 	useEffect(() => {
 		getCurrentUser();
+		getReviews();
 	}, []);
+
+	//Funktionen
 
 	//get current snapshot user from firestore and set user state
 	const getCurrentUser = async () => {
@@ -45,6 +46,20 @@ const Profil = () => {
 					image: doc.data().image,
 					email: doc.data().email,
 				});
+			});
+	};
+
+	const getReviews = async () => {
+		await firebase
+			.firestore()
+			.collection("reviews")
+			.where("user", "==", auth.currentUser.uid)
+			.onSnapshot((snapshot) => {
+				const review = snapshot.docs.map((doc) => ({
+					id: doc.id,
+					...doc.data(),
+				}));
+				setReviews(review);
 			});
 	};
 
@@ -145,12 +160,23 @@ const Profil = () => {
 			>
 				<h3 style={styles.reviewTitle}>Bewertungen</h3>
 				<Button onClick={handleShowReview}>Bewerten</Button>
+				<div className="mt-5">
+					{reviews.map((review) => (
+						<div key={review.user}>
+							<div className="d-flex flex-row justify-content-center align-items-center">
+								<p style={styles.aboutTitle}>{review.title}</p>
+								<p style={styles.aboutText} className="text-center">
+									{review.review}
+								</p>
+							</div>
+						</div>
+					))}
+				</div>
 			</div>
 			<ReviewModal
 				showReviewModal={showReview}
 				setReviewModal={setShowReview}
 			/>
-			<div></div>
 			<Footer />
 		</div>
 	);
