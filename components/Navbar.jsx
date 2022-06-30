@@ -59,7 +59,6 @@ const Navbar = () => {
 			setLoggedIn(true);
 		} else {
 			setLoggedIn(false);
-			router.push("/");
 		}
 	};
 
