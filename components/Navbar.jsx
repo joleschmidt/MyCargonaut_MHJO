@@ -3,63 +3,39 @@ import { Image, Nav } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRightFromBracket, faUser } from "@fortawesome/free-solid-svg-icons";
 import SignInModal from "./SignInModal";
-import firebase, { auth } from "../firebase";
+import firebase from "firebase";
 import router, { useRouter } from "next/router";
+import { useContext, createContext } from "react";
+import AuthContext from "../context/AuthContext";
+import { useAuth } from "../pages/_app";
 
 const Navbar = () => {
 	//functions
 	const [show, setShow] = useState(false);
 	const [error, setError] = useState(null);
-	const [loggedIn, setLoggedIn] = useState(false);
+	const [loggedIn, setLoggedIn] = useState(true);
 	const handleShow = () => setShow(true);
-	const [user, setUser] = useState({
-		first: "",
-		last: "",
-		age: "",
-		image: "",
-		email: "",
-	});
+
+	//context
+	const { currentUser, userData } = useAuth();
 
 	useEffect(() => {
-		checkIfLoggedIn();
-		if (loggedIn === true) {
-			getCurrentUser();
+		if (currentUser !== null) {
+			setLoggedIn(true);
+			//alert(currentUser.email);
+		} else {
+			setLoggedIn(false);
 		}
-		return;
-	}, [loggedIn]);
+	}, []);
 
-	//get current snapshot user from firestore and set user state
-	const getCurrentUser = async () => {
-		await firebase
-			.firestore()
-			.collection("users")
-			.doc(auth.currentUser.uid)
-			.get()
-			.then((doc) => {
-				setUser({
-					first: doc.data().first,
-					last: doc.data().last,
-					age: doc.data().age,
-					image: doc.data().image,
-					email: doc.data().email,
-				});
-			});
-	};
 	const handleLogout = () => {
-		auth
+		firebase
+			.auth()
 			.signOut()
 			.then(() => {
 				router.push("/");
 			})
 			.catch((err) => setError(err.message));
-	};
-
-	const checkIfLoggedIn = () => {
-		if (auth.currentUser) {
-			setLoggedIn(true);
-		} else {
-			setLoggedIn(false);
-		}
 	};
 
 	//HTML
@@ -126,7 +102,7 @@ const Navbar = () => {
 							<a href="/profile">
 								<img
 									className="rounded-circle d-inline-block align-top"
-									src={user.image}
+									src={userData.image}
 									alt="avatar"
 									width="50"
 									height="50"

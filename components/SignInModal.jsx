@@ -50,7 +50,7 @@ const SignInModal = (props) => {
 					setSuccess(true);
 					setError(false);
 					setShowModal(false);
-					router.push("/profile");
+					//router.push("/profile");
 				})
 				.catch((error) => {
 					setError(error.message);

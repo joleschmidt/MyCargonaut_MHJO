@@ -10,58 +10,14 @@ import ReviewModal from "../components/ReviewModal";
 import { Button } from "react-bootstrap";
 import Footer from "../components/Footer";
 import { auth } from "../firebase";
-import firebase from "../firebase";
+import firebase from "firebase";
+import { useAuth } from "../pages/_app";
 
 const Profil = () => {
 	const [showReview, setShowReview] = useState(false);
 	const handleShowReview = () => setShowReview(true);
-	const [reviews, setReviews] = useState([]);
-	const [user, setUser] = useState({
-		first: "",
-		last: "",
-		age: "",
-		image: "",
-		email: "",
-	});
-
-	useEffect(() => {
-		getCurrentUser();
-		getReviews();
-	}, []);
-
-	//Funktionen
-
-	//get current snapshot user from firestore and set user state
-	const getCurrentUser = async () => {
-		await firebase
-			.firestore()
-			.collection("users")
-			.doc(auth.currentUser.uid)
-			.get()
-			.then((doc) => {
-				setUser({
-					first: doc.data().first,
-					last: doc.data().last,
-					age: doc.data().age,
-					image: doc.data().image,
-					email: doc.data().email,
-				});
-			});
-	};
-
-	const getReviews = async () => {
-		await firebase
-			.firestore()
-			.collection("reviews")
-			.where("user", "==", auth.currentUser.uid)
-			.onSnapshot((snapshot) => {
-				const review = snapshot.docs.map((doc) => ({
-					id: doc.id,
-					...doc.data(),
-				}));
-				setReviews(review);
-			});
-	};
+	const { currentUser, userData, reviews } = useAuth();
+	//const currentUser = firebase.auth().currentUser;
 
 	//HTML
 	return (
@@ -73,7 +29,7 @@ const Profil = () => {
 					<div className="row justify-content-center m-3">
 						<img
 							className="rounded-circle "
-							src={user.image}
+							src={userData.image}
 							alt="Profilbild"
 							width="300"
 							height="300"
@@ -82,7 +38,7 @@ const Profil = () => {
 					</div>
 					<div className="d-flex flex-row justify-content-center align-items-center">
 						<h2 style={styles.name}>
-							{user.first} {user.last}
+							{userData.first} {userData.last}
 						</h2>
 						<a href="/paymentProcess">
 							<FontAwesomeIcon
@@ -92,13 +48,13 @@ const Profil = () => {
 							/>
 						</a>
 					</div>
-					<h3 style={styles.age}>{user.age} Jahre</h3>
+					<h3 style={styles.age}>{userData.age} Jahre</h3>
 					<hr style={styles.border} />
 					<div
 						style={styles.about}
 						className="d-flex flex-column align-items-center"
 					>
-						<p style={styles.aboutTitle}>Über {user.first}</p>
+						<p style={styles.aboutTitle}>Über {userData.first}</p>
 						<p style={styles.aboutText} className="text-center">
 							Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
 							nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
