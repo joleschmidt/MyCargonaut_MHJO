@@ -11,7 +11,7 @@ const SignInModal = (props) => {
 	const [url, setUrl] = useState("");
 	const [first, setFirst] = useState("");
 	const [last, setLast] = useState("");
-	const [age, setAge] = useState(null);
+	const [age, setAge] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [checkPassword, setCheckPassword] = useState("");
@@ -50,7 +50,7 @@ const SignInModal = (props) => {
 					setSuccess(true);
 					setError(false);
 					setShowModal(false);
-					//router.push("/profile");
+					router.push("/");
 				})
 				.catch((error) => {
 					setError(error.message);

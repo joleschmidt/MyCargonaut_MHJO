@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 
 const SearchResults = () => {
 	const router = useRouter();
-	const [result, setResult] = useState({});
+	const [result, setResult] = useState([]);
 	const queryType = router.query.searchType;
 
 	const searchData = router.query;
@@ -150,7 +150,7 @@ const SearchResults = () => {
 					<Search />
 				</div>
 
-				{listResult.map((entry) => {
+				{result.map((entry) => {
 					return (
 						<div key={entry.id} style={resultsDiv} className="results">
 							<Card style={cardEntry} onClick={() => showDetails(entry.id)}>

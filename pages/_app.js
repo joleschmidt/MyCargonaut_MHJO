@@ -10,6 +10,7 @@ import AuthProvider from "../context/AuthContext";
 import firebase from "firebase";
 
 import React, { useState, useEffect } from "react";
+import { User } from "../components/class/user";
 
 const AuthContext = React.createContext();
 
@@ -20,6 +21,7 @@ export function useAuth() {
 function MyApp({ Component, pageProps }) {
 	const [currentUser, setCurrentUser] = React.useState({});
 	const [reviews, setReviews] = useState([]);
+	let user = new User();
 	const [userData, setUserData] = useState({
 		first: "",
 		last: "",

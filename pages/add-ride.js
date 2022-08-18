@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Head from "next/head";
-import {Form} from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 
 //components
@@ -10,6 +10,8 @@ import firebase from "../firebase";
 import Footer from "../components/Footer";
 import "react-datepicker/dist/react-datepicker.css";
 import SuccessModal from "../components/SuccessModal";
+
+import { useAuth } from "../pages/_app";
 
 const Ride = () => {
 	//Funktionen
@@ -22,6 +24,7 @@ const Ride = () => {
 	const [textRide, setTextRide] = useState("");
 	const [show, setShow] = useState(false);
 	const handleShow = () => setShow(true);
+	const { currentUser, userData, reviews } = useAuth();
 
 	const addRideToFirestore = () => {
 		firebase.firestore().collection("rides").add({
@@ -32,17 +35,18 @@ const Ride = () => {
 			date: dateRide.toString(),
 			car: cartype,
 			text: textRide,
+			uid: currentUser.uid,
 		});
 	};
 
 	const handleClick = () => {
-		setStartRide('');
-		setEndRide('');
-		setPassengerQuantity('default');
-		setPriceRide('');
-		setDateRide('');
-		setCartype('default');
-		setTextRide('');
+		setStartRide("");
+		setEndRide("");
+		setPassengerQuantity("default");
+		setPriceRide("");
+		setDateRide("");
+		setCartype("default");
+		setTextRide("");
 	};
 
 	//HTML
@@ -123,14 +127,14 @@ const Ride = () => {
 									value={priceRide}
 									onChange={(e) => setPriceRide(e.target.value)}
 								/>
-									<DatePicker
-										selected={dateRide}
-										onChange={selectedDate => setDateRide(selectedDate)}
-										dateFormat={'dd.MM.yyyy'}
-										minDate={new Date()}
-										className={'datepickerAdd form-control input-styles mb-3'}
-										placeholderText={'Wann?'}
-									/>
+								<DatePicker
+									selected={dateRide}
+									onChange={(selectedDate) => setDateRide(selectedDate)}
+									dateFormat={"dd.MM.yyyy"}
+									minDate={new Date()}
+									className={"datepickerAdd form-control input-styles mb-3"}
+									placeholderText={"Wann?"}
+								/>
 							</div>
 							<Form.Select
 								className="input-styles mb-3"
@@ -156,8 +160,11 @@ const Ride = () => {
 						<div className="d-flex justify-content-center">
 							<Button
 								className="btn-style mt-4 mb-4"
-								onClick={function (event){ addRideToFirestore(); handleClick(); handleShow()}}
-
+								onClick={function (event) {
+									addRideToFirestore();
+									handleClick();
+									handleShow();
+								}}
 							>
 								veröffentlichen
 							</Button>
@@ -166,7 +173,7 @@ const Ride = () => {
 				</div>
 				<SuccessModal showModal={show} setShowModal={setShow} />
 			</main>
-			<div style={{position: "absolute", left: 0, right: 0, bottom:0}}>
+			<div style={{ position: "absolute", left: 0, right: 0, bottom: 0 }}>
 				<Footer />
 			</div>
 		</div>
@@ -174,5 +181,3 @@ const Ride = () => {
 };
 
 export default Ride;
-
-
