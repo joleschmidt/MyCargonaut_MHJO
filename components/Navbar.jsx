@@ -26,7 +26,7 @@ const Navbar = () => {
 		} else {
 			setLoggedIn(false);
 		}
-	}, []);
+	}, [currentUser]);
 
 	const handleLogout = () => {
 		firebase
