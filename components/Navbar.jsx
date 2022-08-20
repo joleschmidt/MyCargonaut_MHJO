@@ -22,7 +22,6 @@ const Navbar = () => {
 	useEffect(() => {
 		if (currentUser !== null) {
 			setLoggedIn(true);
-			//alert(currentUser.email);
 		} else {
 			setLoggedIn(false);
 		}
