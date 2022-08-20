@@ -10,43 +10,14 @@ import ReviewModal from "../components/ReviewModal";
 import { Button } from "react-bootstrap";
 import Footer from "../components/Footer";
 import { auth } from "../firebase";
-import firebase from "../firebase";
+import firebase from "firebase";
+import { useAuth } from "../pages/_app";
 
 const Profil = () => {
-	//Funktionen
-
 	const [showReview, setShowReview] = useState(false);
 	const handleShowReview = () => setShowReview(true);
-
-	const [user, setUser] = useState({
-		first: "",
-		last: "",
-		age: "",
-		image: "",
-		email: "",
-	});
-
-	useEffect(() => {
-		getCurrentUser();
-	}, []);
-
-	//get current snapshot user from firestore and set user state
-	const getCurrentUser = async () => {
-		await firebase
-			.firestore()
-			.collection("users")
-			.doc(auth.currentUser.uid)
-			.get()
-			.then((doc) => {
-				setUser({
-					first: doc.data().first,
-					last: doc.data().last,
-					age: doc.data().age,
-					image: doc.data().image,
-					email: doc.data().email,
-				});
-			});
-	};
+	const { currentUser, userData, reviews } = useAuth();
+	//const currentUser = firebase.auth().currentUser;
 
 	//HTML
 	return (
@@ -58,7 +29,7 @@ const Profil = () => {
 					<div className="row justify-content-center m-3">
 						<img
 							className="rounded-circle "
-							src={user.image}
+							src={userData.image}
 							alt="Profilbild"
 							width="300"
 							height="300"
@@ -67,7 +38,7 @@ const Profil = () => {
 					</div>
 					<div className="d-flex flex-row justify-content-center align-items-center">
 						<h2 style={styles.name}>
-							{user.first} {user.last}
+							{userData.first} {userData.last}
 						</h2>
 						<a href="/paymentProcess">
 							<FontAwesomeIcon
@@ -77,13 +48,13 @@ const Profil = () => {
 							/>
 						</a>
 					</div>
-					<h3 style={styles.age}>{user.age} Jahre</h3>
+					<h3 style={styles.age}>{userData.age} Jahre</h3>
 					<hr style={styles.border} />
 					<div
 						style={styles.about}
 						className="d-flex flex-column align-items-center"
 					>
-						<p style={styles.aboutTitle}>Über {user.first}</p>
+						<p style={styles.aboutTitle}>Über {userData.first}</p>
 						<p style={styles.aboutText} className="text-center">
 							Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
 							nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
@@ -145,12 +116,23 @@ const Profil = () => {
 			>
 				<h3 style={styles.reviewTitle}>Bewertungen</h3>
 				<Button onClick={handleShowReview}>Bewerten</Button>
+				<div className="mt-5">
+					{reviews.map((review) => (
+						<div key={review.user}>
+							<div className="d-flex flex-row justify-content-center align-items-center">
+								<p style={styles.aboutTitle}>{review.title}</p>
+								<p style={styles.aboutText} className="text-center">
+									{review.review}
+								</p>
+							</div>
+						</div>
+					))}
+				</div>
 			</div>
 			<ReviewModal
 				showReviewModal={showReview}
 				setReviewModal={setShowReview}
 			/>
-			<div></div>
 			<Footer />
 		</div>
 	);

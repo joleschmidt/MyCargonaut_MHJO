@@ -11,7 +11,7 @@ const SignInModal = (props) => {
 	const [url, setUrl] = useState("");
 	const [first, setFirst] = useState("");
 	const [last, setLast] = useState("");
-	const [age, setAge] = useState(null);
+	const [age, setAge] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [checkPassword, setCheckPassword] = useState("");
@@ -50,7 +50,7 @@ const SignInModal = (props) => {
 					setSuccess(true);
 					setError(false);
 					setShowModal(false);
-					router.push("/profile");
+					router.push("/");
 				})
 				.catch((error) => {
 					setError(error.message);
@@ -95,7 +95,6 @@ const SignInModal = (props) => {
 						console.log(url);
 						setIsLoading(false);
 						setIsUploaded(true);
-						router.push("/profile");
 					})
 					.catch((err) => {
 						console.log(err);
@@ -108,7 +107,7 @@ const SignInModal = (props) => {
 	const handleSignUp = (event) => {
 		event.preventDefault();
 		setError("");
-		if (image == null) {
+		if (url === "") {
 			setError("Please upload an image");
 		} else if (validatePassword()) {
 			// Create a new user with email and password using firebase
@@ -219,17 +218,6 @@ const SignInModal = (props) => {
 					) : (
 						<form>
 							<input
-								type="file"
-								accept=".jpg, .jpeg, .png"
-								onChange={(e) => {
-									setImage(e.target.files[0]);
-								}}
-							/>
-							{isUploaded == false ? (
-								<Button onClick={upload}>Upload</Button>
-							) : null}
-							{isLoading == true ? <Alert>..uploading Image</Alert> : null}
-							<input
 								type="text"
 								placeholder="Vorname"
 								style={styles.textInput}
@@ -283,6 +271,18 @@ const SignInModal = (props) => {
 								value={checkPassword}
 								onChange={(e) => setCheckPassword(e.target.value)}
 							/>
+							<input
+								type="file"
+								accept=".jpg, .jpeg, .png"
+								style={styles.imageInput}
+								onChange={(e) => {
+									setImage(e.target.files[0]);
+								}}
+							/>
+							{isUploaded == false ? (
+								<Button onClick={upload}>Upload</Button>
+							) : null}
+							{isLoading == true ? <Alert>..uploading Image</Alert> : null}
 							{error == true ? (
 								<p className="text-danger mt-2">
 									Bitte überprüfe deine Eingaben!
@@ -348,6 +348,12 @@ let styles = {
 		justifyContent: "center",
 		alignItems: "center",
 		overflow: "hidden",
+	},
+	imageInput: {
+		height: "50px",
+		width: "456px",
+		marginTop: "30px",
+		borderColor: "#8cb6b2",
 	},
 	textInput: {
 		height: "50px",

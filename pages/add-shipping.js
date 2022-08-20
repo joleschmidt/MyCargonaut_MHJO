@@ -12,6 +12,8 @@ import firebase from "../firebase";
 import Footer from "../components/Footer";
 import "react-datepicker/dist/react-datepicker.css";
 import SuccessModal from "../components/SuccessModal";
+import { useAuth } from "../pages/_app";
+
 
 const Shipping = () => {
 	//Funktionen
@@ -25,6 +27,8 @@ const Shipping = () => {
 	const [dateShipping, setDateShipping] = useState("");
 	const [show, setShow] = useState(false);
 	const handleShow = () => setShow(true);
+	const { currentUser, userData, reviews } = useAuth();
+
 
 	const addShippingToFirestore = () => {
 			setError(false);
@@ -38,17 +42,19 @@ const Shipping = () => {
 			price: priceShipping,
 			date: dateShipping.toString(),
 			car: cartype,
+			uid: currentUser.uid,
 		});
 	};
 	const handleClick = () => {
-		setStartShipping('');
-		setEndShipping('');
-		setSpeditionstype('default');
-		setShippingSize('');
-		setShippingWeight('');
-		setPriceShipping('');
-		setDateShipping('');
-		setCartype('default');
+		setStartShipping("");
+		setEndShipping("");
+		setSpeditionstype("default");
+		setShippingSize("");
+		setShippingWeight("");
+		setPriceShipping("");
+		setDateShipping("");
+		setCartype("default");
+
 	};
 
 	//HTML
@@ -133,11 +139,12 @@ const Shipping = () => {
 									/>
 									<DatePicker
 										selected={dateShipping}
-										onChange={selectedDate => setDateShipping(selectedDate)}
-										dateFormat={'dd.MM.yyyy'}
+										onChange={(selectedDate) => setDateShipping(selectedDate)}
+										dateFormat={"dd.MM.yyyy"}
 										minDate={new Date()}
-										className={'datepickerAdd input-styles'}
-										placeholderText={'Wann?'}
+										className={"datepickerAdd input-styles"}
+										placeholderText={"Wann?"}
+
 									/>
 								</div>
 								<Form.Select
@@ -157,7 +164,12 @@ const Shipping = () => {
 							<div className="d-flex justify-content-center">
 								<Button
 									className="btn-style mt-4 mb-4"
-									onClick={function (event){ addShippingToFirestore(); handleClick(); handleShow()}}
+									onClick={function (event) {
+										addShippingToFirestore();
+										handleClick();
+										handleShow();
+									}}
+
 								>
 									veröffentlichen
 								</Button>
@@ -175,7 +187,8 @@ const Shipping = () => {
 				</div>
 				<SuccessModal showModal={show} setShowModal={setShow} />
 			</main>
-			<div style={{position: "absolute", left: 0, right: 0, bottom:0}}>
+			<div style={{ position: "absolute", left: 0, right: 0, bottom: 0 }}>
+
 				<Footer />
 			</div>
 		</div>
