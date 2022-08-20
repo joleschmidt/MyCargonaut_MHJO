@@ -14,6 +14,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import SuccessModal from "../components/SuccessModal";
 import { useAuth } from "../pages/_app";
 
+
 const Shipping = () => {
 	//Funktionen
 	const [cartype, setCartype] = useState("default");
@@ -28,7 +29,10 @@ const Shipping = () => {
 	const handleShow = () => setShow(true);
 	const { currentUser, userData, reviews } = useAuth();
 
+
 	const addShippingToFirestore = () => {
+			setError(false);
+			setSuccess(true);
 		firebase.firestore().collection("shippings").add({
 			start: startShipping,
 			end: endShipping,
@@ -50,6 +54,7 @@ const Shipping = () => {
 		setPriceShipping("");
 		setDateShipping("");
 		setCartype("default");
+
 	};
 
 	//HTML
@@ -139,6 +144,7 @@ const Shipping = () => {
 										minDate={new Date()}
 										className={"datepickerAdd input-styles"}
 										placeholderText={"Wann?"}
+
 									/>
 								</div>
 								<Form.Select
@@ -163,6 +169,7 @@ const Shipping = () => {
 										handleClick();
 										handleShow();
 									}}
+
 								>
 									veröffentlichen
 								</Button>
@@ -181,6 +188,7 @@ const Shipping = () => {
 				<SuccessModal showModal={show} setShowModal={setShow} />
 			</main>
 			<div style={{ position: "absolute", left: 0, right: 0, bottom: 0 }}>
+
 				<Footer />
 			</div>
 		</div>
