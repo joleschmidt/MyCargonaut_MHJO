@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 import { Rating } from "react-simple-star-rating";
+import { useAuth } from "../pages/_app";
 import firebase, { auth } from "../firebase";
 
 const ReviewModal = (props) => {
@@ -9,6 +10,7 @@ const ReviewModal = (props) => {
 	const [rating, setRating] = useState(0); // initial rating value
 	const [title, setTitle] = useState("");
 	const [review, setReview] = useState("");
+	const { currentUser, userData, reviews } = useAuth();
 
 	// Catch Rating value
 	const handleRating = (rate) => {
@@ -26,7 +28,8 @@ const ReviewModal = (props) => {
 					title: title,
 					review: review,
 					rating: rating,
-					user: auth.currentUser.uid,
+					user: currentUser.uid,
+					userName: userData.first + " " + userData.last,
 					date: new Date(),
 				})
 				.then(() => {

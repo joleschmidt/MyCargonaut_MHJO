@@ -7,11 +7,12 @@ import Navbar from "../components/Navbar";
 import { faCog } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ReviewModal from "../components/ReviewModal";
-import { Button } from "react-bootstrap";
+import { Button, Card } from "react-bootstrap";
 import Footer from "../components/Footer";
 import { auth } from "../firebase";
 import firebase from "firebase";
 import { useAuth } from "../pages/_app";
+import { Rating } from "react-simple-star-rating";
 
 const Profil = () => {
 	const [showReview, setShowReview] = useState(false);
@@ -116,16 +117,32 @@ const Profil = () => {
 			>
 				<h3 style={styles.reviewTitle}>Bewertungen</h3>
 				<Button onClick={handleShowReview}>Bewerten</Button>
-				<div className="mt-5">
+
+				<div className="mt-5 row w-50">
 					{reviews.map((review) => (
-						<div key={review.user}>
-							<div className="d-flex flex-row justify-content-center align-items-center">
-								<p style={styles.aboutTitle}>{review.title}</p>
-								<p style={styles.aboutText} className="text-center">
-									{review.review}
-								</p>
-							</div>
-						</div>
+						<Card style={styles.reviewCard} key={review.user} className="m-3">
+							<Card.Body>
+								<Card.Title>
+									{review.title}{" "}
+									<Rating
+										showTooltip
+										tooltipArray={[
+											"Terrible",
+											"Bad",
+											"Average",
+											"Great",
+											"Prefect",
+										]}
+										ratingValue={review.rating}
+										fillColor="#659e98"
+									/>
+								</Card.Title>
+								<Card.Text>{review.review}</Card.Text>
+								<Card.Text>
+									<small className="text-muted">{review.userName}</small>
+								</Card.Text>
+							</Card.Body>
+						</Card>
 					))}
 				</div>
 			</div>
