@@ -11,17 +11,16 @@ import { useRouter } from "next/router";
 import "react-datepicker/dist/react-datepicker.css";
 
 const Search = (props) => {
-	const router = useRouter();
+    const router = useRouter();
 
-	const showSearchResults = (data) => {
-		router
-			.push({
-				pathname: "/search-results/",
-				query: {
-					searchType: searchDrive,
-				},
-			})
-			.catch((err) => consoleError("Error: ", err));
+    const showSearchResults = (data) => {
+        router.push({
+            pathname: "/search-results/",
+            query: {
+                searchType: searchDrive,
+            },
+        }).catch((err) => consoleError('Error: ', err));
+    }
 	};
 
 	//Values of input-fields
@@ -37,45 +36,40 @@ const Search = (props) => {
 	const changeSearchToDrive = () => setSearchDrive(true);
 	const changeSearchToGoods = () => setSearchDrive(false);
 
-	//store searchresult
-	const [result, setResult] = useState([]);
-
-	//functions
-	const doSearch = () => {
-		if (searchDrive) {
-			firebase
-				.firestore()
-				.collection("rides")
-				.where("startride", "==", start)
-				.where("endride", "==", destination)
-				.where("passenger", "==", passengers)
-				.onSnapshot((snapshot) => {
-					const result = snapshot.docs.map((doc) => ({
-						id: doc.id,
-						...doc.data(),
-					}));
-					setResult(result);
-					console.log(result);
-					showSearchResults(result);
-				});
-		} else {
-			firebase
-				.firestore()
-				.collection("shippings")
-				.where("start", "==", start)
-				.where("end", "==", destination)
-				.where("typeSpedition", "==", goods)
-				.onSnapshot((snapshot) => {
-					const result = snapshot.docs.map((doc) => ({
-						id: doc.id,
-						...doc.data(),
-					}));
-					setResult(result);
-					console.log(result);
-					showSearchResults(result);
-				});
-		}
-	};
+    //functions
+    const doSearch = () => {
+        if (searchDrive) {
+            firebase.firestore()
+                .collection('rides')
+                .where('startride', '==', start)
+                .where('endride', '==', destination)
+                .where('passenger', '==', passengers)
+                .onSnapshot((snapshot) => {
+                    const result = snapshot.docs.map((doc) => ({
+                        id: doc.id,
+                        ...doc.data(),
+                    }));
+                    setResult(result);
+                    console.log(result);
+                    showSearchResults(result);
+                });
+        } else {
+            firebase.firestore()
+                .collection('shippings')
+                .where('start', '==', start)
+                .where('end', '==', destination)
+                .where('typeSpedition', '==', goods)
+                .onSnapshot((snapshot) => {
+                    const result = snapshot.docs.map((doc) => ({
+                        id: doc.id,
+                        ...doc.data(),
+                    }));
+                    setResult(result);
+                    console.log(result);
+                    showSearchResults(result);
+                });
+        }
+    }
 
 	//css
 	let style = {
