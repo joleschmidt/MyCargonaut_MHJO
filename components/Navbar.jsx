@@ -20,20 +20,22 @@ const Navbar = () => {
 	const { currentUser, userData } = useAuth();
 
 	useEffect(() => {
-		if (currentUser !== null) {
-			setLoggedIn(true);
-			//alert(currentUser.email);
-		} else {
-			setLoggedIn(false);
-		}
-	}, []);
+		firebase.auth().onAuthStateChanged((user) => {
+			if (currentUser !== null) {
+				setLoggedIn(true);
+				//alert(currentUser.email);
+			} else {
+				setLoggedIn(false);
+			}
+		});
+	}, [currentUser]);
 
 	const handleLogout = () => {
 		firebase
 			.auth()
 			.signOut()
 			.then(() => {
-				router.push("/");
+				window.location.reload();
 			})
 			.catch((err) => setError(err.message));
 	};
