@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Head from "next/head";
-import { Form } from "react-bootstrap";
+import {Form} from "react-bootstrap";
 import DatePicker from "react-datepicker";
 
 //components
@@ -10,8 +10,8 @@ import firebase from "../firebase";
 import Footer from "../components/Footer";
 import "react-datepicker/dist/react-datepicker.css";
 import SuccessModal from "../components/SuccessModal";
-
 import { useAuth } from "../pages/_app";
+
 
 const Ride = () => {
 	//Funktionen
@@ -26,7 +26,9 @@ const Ride = () => {
 	const handleShow = () => setShow(true);
 	const { currentUser, userData, reviews } = useAuth();
 
+
 	const addRideToFirestore = () => {
+		if(startRide == "")
 		firebase.firestore().collection("rides").add({
 			startride: startRide,
 			endride: endRide,
@@ -40,13 +42,14 @@ const Ride = () => {
 	};
 
 	const handleClick = () => {
-		setStartRide("");
-		setEndRide("");
-		setPassengerQuantity("default");
-		setPriceRide("");
-		setDateRide("");
-		setCartype("default");
-		setTextRide("");
+
+		setStartRide('');
+		setEndRide('');
+		setPassengerQuantity('default');
+		setPriceRide('');
+		setDateRide('');
+		setCartype('default');
+		setTextRide('');
 	};
 
 	//HTML
@@ -135,6 +138,7 @@ const Ride = () => {
 									className={"datepickerAdd form-control input-styles mb-3"}
 									placeholderText={"Wann?"}
 								/>
+
 							</div>
 							<Form.Select
 								className="input-styles mb-3"
@@ -165,6 +169,7 @@ const Ride = () => {
 									handleClick();
 									handleShow();
 								}}
+
 							>
 								veröffentlichen
 							</Button>
@@ -174,6 +179,7 @@ const Ride = () => {
 				<SuccessModal showModal={show} setShowModal={setShow} />
 			</main>
 			<div style={{ position: "absolute", left: 0, right: 0, bottom: 0 }}>
+
 				<Footer />
 			</div>
 		</div>
@@ -181,3 +187,4 @@ const Ride = () => {
 };
 
 export default Ride;
+
