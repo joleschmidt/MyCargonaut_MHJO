@@ -22,6 +22,11 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 workflow in `Github Actions update and deploys website automatically` after push and successfull test
 
+or 
+
+update project ---> `firebase deploy --only hosting`
+ (delete .firebase folder if project is not updated correctly)
+
 ## Firebase testing / debugging
 
 `firebase serve --only hosting`

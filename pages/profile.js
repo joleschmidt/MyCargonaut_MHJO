@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import Image from "next/image";
 
@@ -9,12 +9,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ReviewModal from "../components/ReviewModal";
 import { Button } from "react-bootstrap";
 import Footer from "../components/Footer";
+import { auth } from "../firebase";
+import firebase from "firebase";
+import { useAuth } from "../pages/_app";
 
 const Profil = () => {
-	//Funktionen
-
 	const [showReview, setShowReview] = useState(false);
 	const handleShowReview = () => setShowReview(true);
+	const { currentUser, userData, reviews } = useAuth();
+	//const currentUser = firebase.auth().currentUser;
+
 	//HTML
 	return (
 		<div className="m-0">
@@ -24,8 +28,8 @@ const Profil = () => {
 				<div className="container flex-column" style={styles.profileInfo}>
 					<div className="row justify-content-center m-3">
 						<img
-							className="rounded-circle  col-sm-auto"
-							src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200"
+							className="rounded-circle "
+							src={userData.image}
 							alt="Profilbild"
 							width="300"
 							height="300"
@@ -33,7 +37,9 @@ const Profil = () => {
 						/>
 					</div>
 					<div className="d-flex flex-row justify-content-center align-items-center">
-						<h2 style={styles.name}>Hans Peter</h2>
+						<h2 style={styles.name}>
+							{userData.first} {userData.last}
+						</h2>
 						<a href="/paymentProcess">
 							<FontAwesomeIcon
 								className="icon"
@@ -42,13 +48,13 @@ const Profil = () => {
 							/>
 						</a>
 					</div>
-					<h3 style={styles.age}>43 Jahre</h3>
+					<h3 style={styles.age}>{userData.age} Jahre</h3>
 					<hr style={styles.border} />
 					<div
 						style={styles.about}
 						className="d-flex flex-column align-items-center"
 					>
-						<p style={styles.aboutTitle}>Über Hans</p>
+						<p style={styles.aboutTitle}>Über {userData.first}</p>
 						<p style={styles.aboutText} className="text-center">
 							Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
 							nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
@@ -110,6 +116,18 @@ const Profil = () => {
 			>
 				<h3 style={styles.reviewTitle}>Bewertungen</h3>
 				<Button onClick={handleShowReview}>Bewerten</Button>
+				<div className="mt-5">
+					{reviews.map((review) => (
+						<div key={review.user}>
+							<div className="d-flex flex-row justify-content-center align-items-center">
+								<p style={styles.aboutTitle}>{review.title}</p>
+								<p style={styles.aboutText} className="text-center">
+									{review.review}
+								</p>
+							</div>
+						</div>
+					))}
+				</div>
 			</div>
 			<ReviewModal
 				showReviewModal={showReview}
@@ -188,7 +206,6 @@ let styles = {
 		fontSize: "32px",
 		fontWeight: "bold",
 	},
-	profileImg: {},
 	profileInfo: {
 		justifyContent: "center",
 		alignItems: "center",

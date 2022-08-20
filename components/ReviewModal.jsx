@@ -1,17 +1,46 @@
 import React, { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 import { Rating } from "react-simple-star-rating";
+import firebase, { auth } from "../firebase";
 
 const ReviewModal = (props) => {
 	const { showReviewModal, setReviewModal } = props;
 	const handleCloseReview = () => setReviewModal(false);
 	const [rating, setRating] = useState(0); // initial rating value
+	const [title, setTitle] = useState("");
+	const [review, setReview] = useState("");
 
 	// Catch Rating value
 	const handleRating = (rate) => {
 		setRating(rate);
 	};
 
+	//add review to firebase firestore
+	const handleReview = (event) => {
+		event.preventDefault();
+		if (review !== "") {
+			firebase
+				.firestore()
+				.collection("reviews")
+				.add({
+					title: title,
+					review: review,
+					rating: rating,
+					user: auth.currentUser.uid,
+					date: new Date(),
+				})
+				.then(() => {
+					setReviewModal(false);
+					setTitle("");
+					setReview("");
+					setRating(0);
+					handleCloseReview();
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+		}
+	};
 	return (
 		<div>
 			<Modal
@@ -37,26 +66,30 @@ const ReviewModal = (props) => {
 						/>
 
 						<input
+							value={title}
 							type="text"
 							placeholder="Titel"
 							style={styles.textInput}
 							className="form-control"
 							autoFocus
 							required
+							onChange={(e) => setTitle(e.target.value)}
 						/>
 						<textarea
+							value={review}
 							placeholder="Bewertung"
 							style={styles.textAreaInput}
 							className="form-control"
 							autoFocus
 							required
+							onChange={(e) => setReview(e.target.value)}
 						/>
 
 						<hr style={styles.border} />
 						<Button
 							variant="primary"
 							style={styles.sendBtn}
-							onClick={handleCloseReview}
+							onClick={handleReview}
 						>
 							absenden
 						</Button>
